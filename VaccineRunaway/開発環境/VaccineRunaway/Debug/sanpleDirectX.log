@@ -1,0 +1,10 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (sanpleDirectX.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  tutorial.cpp
+  player.cpp
+  main.cpp
+  item.cpp
+  game.cpp
+  enemy.cpp
+  コードを生成中...
+  sanpleDirectX.vcxproj -> C:\Users\student\Documents\Visual Studio 2015\2DGame\VaccineRunaway\Debug\VaccineRunaway.exe
+  sanpleDirectX.vcxproj -> C:\Users\student\Documents\Visual Studio 2015\2DGame\VaccineRunaway\Debug\VaccineRunaway.pdb (Full PDB)
