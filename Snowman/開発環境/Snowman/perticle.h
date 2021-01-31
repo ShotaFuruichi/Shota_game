@@ -16,6 +16,7 @@ HRESULT InitPerticle(void);
 void UninitPerticle(void);
 void UpdatePerticle(void);
 void DrawPerticle(void);
-float GetRandom(float min, float max);
+void SetVertexPert(int nIdx);
+void SetPerticle(D3DXVECTOR3 pos, D3DXVECTOR3 move, float fRadius, D3DXCOLOR col);
 
 #endif

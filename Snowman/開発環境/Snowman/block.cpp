@@ -308,7 +308,7 @@ void SetTextureBlock(int nIdx)
 ////////////////////////////////////////////////////////////////////////////////
 //ƒuƒƒbƒN‚Ì“–‚½‚è”»’è
 ////////////////////////////////////////////////////////////////////////////////
-bool ColisionBlock(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, float fWidth, float fHeight)
+bool CollisionBlock(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, float fWidth, float fHeight)
 {
 	//•Ï”éŒ¾
 	BLOCK *pBlock;

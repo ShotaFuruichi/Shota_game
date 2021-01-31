@@ -15,6 +15,7 @@
 #include "fade.h"
 #include "time.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -86,7 +87,7 @@ HRESULT InitPlayer(void)
 	{
 		return E_FAIL;
 	}
-	
+
 	//頂点情報の設定
 	SetVertexPlayer();
 
@@ -157,7 +158,7 @@ void UpdatePlayer(void)
 	ShotPlayer();
 	
 	//ブロックの当たり判定
-	ColisionBlock(&g_Player.pos, &g_Player.oldpos, &g_Player.move, DIAGONAL_X, DIAGONAL_Y);
+	CollisionBlock(&g_Player.pos, &g_Player.oldpos, &g_Player.move, DIAGONAL_X, DIAGONAL_Y);
 
 	//通常の頂点情報の設定
 	SetVertexPlayer();
@@ -251,7 +252,9 @@ void SetVertexPlayer(void)
 ////////////////////////////////////////////////////////////////////////////////
 void ShotPlayer(void)
 {
-	if (GetKeyboardPress(DIK_RETURN) == true)
+	XinputGamepad *pXinput = GetXinputGamepad();
+
+	if (GetKeyboardPress(DIK_RETURN) == true || pXinput->bPressB == true)
 	{
 		g_nCounterShot++;
 		if (g_nCounterShot % 2 == 0)
@@ -281,12 +284,13 @@ void MovePlayer(void)
 {	
 	//変数宣言
 	VERTEX_2D *pVtx;
+	XinputGamepad *pXinput = GetXinputGamepad();
 
 	g_Player.oldpos = g_Player.pos;
 
-	if (GetKeyboardPress(DIK_D) == true)
+	if (GetKeyboardPress(DIK_D) == true || pXinput->bPressLStickRIGHT == true)
 	{
-		if (GetKeyboardPress(DIK_A) == true)
+		if (GetKeyboardPress(DIK_A) == true || pXinput->bPressLStickLEFT == true)
 		{
 		}
 		else
@@ -308,9 +312,9 @@ void MovePlayer(void)
 			g_pVtxBuffPlayer->Unlock();
 		}	
 	}
-	else if(GetKeyboardPress(DIK_A) == true)
+	else if(GetKeyboardPress(DIK_A) == true || pXinput->bPressLStickLEFT == true)
 	{
-		if (GetKeyboardPress(DIK_D) == true)
+		if (GetKeyboardPress(DIK_D) == true || pXinput->bPressLStickRIGHT == true)
 		{
 		}
 		else
@@ -335,7 +339,7 @@ void MovePlayer(void)
 
 	if (g_Player.bJump == false)
 	{
-		if (GetKeyboardTrigger(DIK_SPACE) == true)
+		if (GetKeyboardTrigger(DIK_SPACE) == true || pXinput->bPressA == true)
 		{
 			g_Player.move.y -= 20.0f;
 			g_Player.bJump = true;

@@ -13,6 +13,7 @@
 #define DIRECTINPUT_VERSION (0x0800)
 #include "dInput.h"		//入力処理に必要
 #include "xaudio2.h"	//サウンド再生に必要
+#include <XInput.h>
 
 //ライブラリのリンク
 #pragma comment(lib,"d3d9.lib")		//描画処理に必要
@@ -20,6 +21,7 @@
 #pragma comment(lib,"dxguid.lib")	//コンポーネント使用に必要
 #pragma comment(lib,"dInput8.lib")	//入力処理に必要
 #pragma comment(lib,"winmm.lib")	//
+#pragma comment(lib, "xinput.lib")	//xinputに必要
 
 //マクロ定義
 #define SCREEN_WIDTH (1920)												//スクリーンの幅

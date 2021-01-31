@@ -17,6 +17,7 @@
 #include "ranking.h"
 #include "fade.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -106,7 +107,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	);
 
 	//初期化処理
-	if (FAILED(Init(hInstance, hWnd, TRUE)))
+	if (FAILED(Init(hInstance, hWnd, FALSE)))
 	{
 		return-1;
 	}
@@ -356,6 +357,9 @@ void Update(void)
 {
 	//キーボードの更新処理
 	UpdateKeyboard();
+
+	//xinputの更新処理
+	LoadGamepad();
 
 	//フェードの更新
 	UpdateFade();

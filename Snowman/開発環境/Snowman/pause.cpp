@@ -10,6 +10,7 @@
 #include "game.h"
 #include "fade.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -333,15 +334,15 @@ void UninitPause(void)
 void UpdatePause(void)
 {
 	//変数宣言
-	FADE fade;
-	fade = GetFade();
+	FADE fade = GetFade();
+	XinputGamepad *pXinput = GetXinputGamepad();
 
-	if (GetKeyboardTrigger(DIK_UP) == true)
+	if (GetKeyboardTrigger(DIK_UP) == true || pXinput->bPressUP == true)
 	{
 		g_MenuP += 2;
 		PlaySound(SOUND_LABEL_SE_SELECT);
 	}
-	if (GetKeyboardTrigger(DIK_DOWN) == true)
+	if (GetKeyboardTrigger(DIK_DOWN) == true || pXinput->bPressDOWN == true)
 	{
 		g_MenuP += 1;
 		PlaySound(SOUND_LABEL_SE_SELECT);
@@ -359,7 +360,7 @@ void UpdatePause(void)
 		g_colContinue = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 		//ゲームに戻る
-		if (GetKeyboardTrigger(DIK_RETURN) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressA == true)
 		{
 			SetPause(false);
 			PlaySound(SOUND_LABEL_SE_DESICION);
@@ -377,7 +378,7 @@ void UpdatePause(void)
 		g_colRetry = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 		//ゲーム画面からリトライ
-		if (GetKeyboardTrigger(DIK_RETURN) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressA == true)
 		{
 			//画面遷移
 			if (fade == FADE_NONE)
@@ -400,7 +401,7 @@ void UpdatePause(void)
 		g_colQuitP = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 		//タイトルに戻る
-		if (GetKeyboardTrigger(DIK_RETURN) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressA == true)
 		{
 			//画面遷移
 			if (fade == FADE_NONE)

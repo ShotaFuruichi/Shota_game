@@ -138,8 +138,8 @@ void UpdateEnemy(void)
 	{
 		if (pEnemy->bUse == true)
 		{	//“G‚ªŽg—p‚³‚ê‚Ä‚¢‚é‚Æ‚«
-			
 			pEnemy->posold = pEnemy->pos;
+
 			switch (pEnemy->state)
 			{
 			case ENEMYSTATE_NORMAL:
@@ -155,17 +155,16 @@ void UpdateEnemy(void)
 					pEnemy->pos.y = SCREEN_HEIGHT;
 				}
 				
-				if ((pEnemy->pos.x - DIAGONAL_X - 20) <= 0)
+				if ((pEnemy->pos.x - ENEMY_SIZEX) <= 0)
 				{
-					pEnemy->pos.x = DIAGONAL_X + 20;
+					pEnemy->pos.x = ENEMY_SIZEX;
 					pEnemy->move.x *= -1;
 				}
-				if ((pEnemy->pos.x + DIAGONAL_X + 20) >= SCREEN_WIDTH)
+				if ((pEnemy->pos.x + ENEMY_SIZEX) >= SCREEN_WIDTH)
 				{
-					pEnemy->pos.x = SCREEN_WIDTH - DIAGONAL_X - 20;
+					pEnemy->pos.x = SCREEN_WIDTH - ENEMY_SIZEX;
 					pEnemy->move.x *= -1;
 				}
-
 
 				if (pEnemy->nLife <= 0)
 				{
@@ -174,7 +173,7 @@ void UpdateEnemy(void)
 					pEnemy->move.y += 5.0f;
 				}
 
-				if (ColisionBlock(&pEnemy->pos, &pEnemy->posold, &pEnemy->move, ENEMY_SIZEX, ENEMY_SIZEY) == true)
+				if (CollisionBlock(&pEnemy->pos, &pEnemy->posold, &pEnemy->move, ENEMY_SIZEX, ENEMY_SIZEY) == true)
 				{
 					pEnemy->move.x *= -1;
 				}
@@ -215,7 +214,7 @@ void UpdateEnemy(void)
 					pEnemy->move.y = 0.0f;
 					pEnemy->pos.y = SCREEN_HEIGHT;
 				}
-				if (ColisionBlock(&pEnemy->pos, &pEnemy->posold, &pEnemy->move, ENEMY_SIZEX, ENEMY_SIZEY) == true)
+				if (CollisionBlock(&pEnemy->pos, &pEnemy->posold, &pEnemy->move, ENEMY_SIZEX, ENEMY_SIZEY) == true)
 				{
 					pEnemy->move.x = 0;
 					
@@ -408,3 +407,4 @@ int GetRandom(int min, int max)
 
 	return min + (rand() * (max - min + 1) / (1 + RAND_MAX));
 }
+

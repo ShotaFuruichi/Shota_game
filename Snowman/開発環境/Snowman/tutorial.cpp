@@ -8,6 +8,7 @@
 #include "tutorial.h"
 #include "input.h"
 #include "fade.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //ƒOƒ[ƒoƒ‹•Ï”
@@ -92,7 +93,9 @@ void UninitTutorial(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateTutorial(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	XinputGamepad *pXinput = GetXinputGamepad();
+
+	if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressStart || pXinput->bPressA)
 	{
 		SetFade(FADE_OUT, MODE_TITLE);
 	}

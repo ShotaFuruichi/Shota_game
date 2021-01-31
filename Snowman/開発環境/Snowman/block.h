@@ -58,7 +58,7 @@ void SetBlock(D3DXVECTOR3 pos, float fWidth, float fHeight, bool bDisp, bool bMo
 void SetVertexBlock(int nIdx);
 void SetColorBlock(int nIdx);
 void SetTextureBlock(int nIdx);
-bool ColisionBlock(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, float fWidth, float fHeight);
+bool CollisionBlock(D3DXVECTOR3 *pPos, D3DXVECTOR3 *pPosOld, D3DXVECTOR3 *pMove, float fWidth, float fHeight);
 bool GetMove(void);
 
 #endif

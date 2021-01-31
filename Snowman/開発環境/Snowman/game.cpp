@@ -17,6 +17,7 @@
 #include "pause.h"
 #include "time.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -106,11 +107,10 @@ void UninitGame(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateGame(void)
 {
-	/*FADE fade;
-	fade = GetFade();*/
+	XinputGamepad *pXinput = GetXinputGamepad();
 
 	//ポーズ処理
-	if (GetKeyboardTrigger(DIK_P) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || pXinput->bPressStart)
 	{
 		g_bPause = g_bPause ? false : true;
 	}
@@ -247,6 +247,7 @@ void SetStage(void)
 	{
 	case STAGE_0:
 		SetEnemy(D3DXVECTOR3(800.0f, 900.0f, 0.0f), D3DXVECTOR3(-2.5f, 0.0f, 0.0f), ENEMYTYPE_SPRING);
+		SetEnemy(D3DXVECTOR3(1200.0f, 900.0f, 0.0f), D3DXVECTOR3(2.5f, 0.0f, 0.0f), ENEMYTYPE_SPRING);
 		SetItem(D3DXVECTOR3(1820.0f, 600.0f, 0.0f), 40.0f, 40.0f);
 
 		//地面

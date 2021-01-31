@@ -10,6 +10,7 @@
 #include "fade.h"
 #include "time.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //ƒOƒ[ƒoƒ‹•Ï”
@@ -101,7 +102,9 @@ void UninitResult(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateResult(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	XinputGamepad *pXinput = GetXinputGamepad();
+
+	if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressStart || pXinput->bPressA)
 	{
 		SetFade(FADE_OUT, MODE_TITLE);
 	}
