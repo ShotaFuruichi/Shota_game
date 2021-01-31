@@ -12,12 +12,15 @@
 #include "score.h"
 #include "highscore.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
-#define HIGHSCORE_POSX (585.0f)								//ハイスコアの中心からの距離X
-#define HIGHSCORE_POSY (135.0f)								//ハイスコアの中心からの距離Y
+#define HIGHSCORE_POSX (585.0f)	//ハイスコアの中心からの距離X
+#define HIGHSCORE_POSY (135.0f)	//ハイスコアの中心からの距離Y
+#define EXPAND_RESULTX (8.6f)	//リザルトの中心からの広がりの速さX
+#define EXPAND_RESULTY (2.0f)	//リザルトの中心からの広がりの速さY
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -170,18 +173,17 @@ void UninitResult(void)
 void UpdateResult(void)
 {
 	//変数宣言
-	FADE fade;
-	PLAYER *pPlayer;
-	fade = GetFade();
-	pPlayer = GetPlayer();
+	FADE fade = GetFade();
+	PLAYER *pPlayer = GetPlayer();
+	XinputGamepad *pXinput = GetXinputGamepad();
 
 	if (g_fLengthX < HIGHSCORE_POSX)
 	{
-		g_fLengthX += 8.6f;
+		g_fLengthX += EXPAND_RESULTX;
 	}
 	if (g_fLengthY < HIGHSCORE_POSY)
 	{
-		g_fLengthY += 2.0f;
+		g_fLengthY += EXPAND_RESULTY;
 	}
 
 	UpdateHighScore();
@@ -193,7 +195,7 @@ void UpdateResult(void)
 	//画面遷移
 	if (fade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressStart == true || pXinput->bPressA)
 		{
 			SetFade(FADE_OUT, MODE_TITLE);
 		}

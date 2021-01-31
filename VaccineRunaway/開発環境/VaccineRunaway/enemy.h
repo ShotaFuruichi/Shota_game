@@ -12,10 +12,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
-#define MAX_ENEMY (256)					//敵の最大数
+#define MAX_ENEMY (512)					//敵の最大数
 #define ENEMY_SIZE (25.0f)				//敵のサイズ
 #define BIGENEMY_SIZE (ENEMY_SIZE * 2)	//大きい敵のサイズ
 #define ENEMY_SPEED (2.0f)				//敵の移動量
+#define SHOTENEMY_SPEED (3.0f)			//早い敵の移動量
 #define ENEMYTYPE_NORMAL (0)			//通常の敵
 #define ENEMYTYPE_BIG (1)				//でかい敵
 #define ENEMYTYPE_SHOT (2)				//弾を撃つ敵
@@ -43,6 +44,7 @@ typedef struct
 	int nCounterState;	//状態カウンター
 	int nLife;			//体力
 	bool bSwitch;		//画面外に行くか
+	bool bDisp;			//可視化
 } ENEMY;
 
 ////////////////////////////////////////////////////////////////////////////////

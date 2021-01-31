@@ -31,6 +31,7 @@ typedef struct
 	bool bUse;			//使用しているかどうか
 	int nType;			//弾の種類
 	bool bSwitch;		//画面外に行くか
+	bool bDisp;			//可視化
 } ITEM;
 
 

@@ -14,6 +14,7 @@
 #include "explosion.h"
 #include "item.h"
 #include "sound.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -22,16 +23,16 @@
 #define POS_Y (780)					//中心Y座標
 #define POS_Z (0)					//中心Z座標
 
-#define DIAGONAL_X (50)				//X方向1辺の長さ
-#define DIAGONAL_Y (50)				//Y方向1辺の長さ
+#define DIAGONAL_X (40)				//X方向1辺の長さ
+#define DIAGONAL_Y (40)				//Y方向1辺の長さ
 
 #define SHOT_INTERVAL (50)			//射撃の間隔
 #define STOP_SHOT (50)				//弾を止められる時間
 
-#define MOVE_SPEED (3.5f)			//移動速度
-#define DOWN_SPEED (0.7f)			//移動速度 * DOWN_SPEED で減速
-#define ROTATE_SPEED (0.04f)		//回転の速度
+#define MOVE_SPEED (4.0f)			//移動速度
+#define DOWN_SPEED (0.6f)			//移動速度 * DOWN_SPEED で減速
 
+#define PLAYER_LIFE (2)				//プレイヤーのライフ
 #define DAMAGE_FLASH (10)			//ダメージを受けた時の点滅速度
 #define DAMAGE_END (60)				//ダメージを受ける処理の終了速度
 #define DEATH_TIME (30)				//死亡からフェードまでの速度
@@ -61,6 +62,7 @@ HRESULT InitPlayer(void)
 
 	g_Player.pos = D3DXVECTOR3(POS_X, POS_Y, POS_Z);								//中心座標の設定
 	g_Player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									//回転角の設定
+	g_Player.rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);								//回転角の設定
 	g_Player.fLength = sqrtf(DIAGONAL_X * DIAGONAL_X + DIAGONAL_Y * DIAGONAL_Y);	//対角線の長さの設定
 	g_Player.fAngle = atan2f(DIAGONAL_X, DIAGONAL_Y);								//対角線の角度の設定
 	g_Player.nLife = 2;																//体力の設定
@@ -135,8 +137,7 @@ void UninitPlayer(void)
 void UpdatePlayer(void)
 {
 	//変数宣言
-	FADE fade;
-	fade = GetFade();
+	FADE fade= GetFade();
 
 	//通常の頂点情報の設定
 	SetVertexPlayer();
@@ -213,7 +214,11 @@ void UpdatePlayer(void)
 	case PLAYERSTATE_DEATH:
 		g_Player.bDisp = false;
 		g_Player.nCounterDisp++;
-		SetExplosion(g_Player.pos);
+		if (g_Player.nCounterDisp == 0)
+		{
+			SetExplosion(g_Player.pos);
+		}
+		
 		if (g_Player.nCounterDisp == DEATH_TIME)
 		{
 			//画面遷移
@@ -347,8 +352,11 @@ void ShotPlayer(void)
 ////////////////////////////////////////////////////////////////////////////////
 void MovePlayer(void)
 {
+	//変数宣言
+	XinputGamepad *pXinput = GetXinputGamepad();
+
 	//向いている方向へ移動
-	if (GetKeyboardPress(DIK_LSHIFT) == true)
+	if (GetKeyboardPress(DIK_LSHIFT) == true || GetKeyboardPress(DIK_RSHIFT) == true || pXinput->bPressB == true)
 	{	//左シフトを押している時は減速する
 		g_Player.pos += D3DXVECTOR3(sinf(D3DX_PI - g_Player.rot.z) * -(MOVE_SPEED * DOWN_SPEED), cosf(D3DX_PI - g_Player.rot.z) * (MOVE_SPEED * DOWN_SPEED), 0.0f);
 	}
@@ -363,12 +371,14 @@ void MovePlayer(void)
 		g_Player.pos.x = (0 + DIAGONAL_X);
 		g_Player.state = PLAYERSTATE_DEATH;
 		PlaySound(SOUND_LABEL_SE_DEATH);
+		SetExplosion(g_Player.pos);
 	}
 	else if (g_Player.pos.x > (SCREEN_WIDTH - DIAGONAL_X))
 	{
 		g_Player.pos.x = (SCREEN_WIDTH - DIAGONAL_X);
 		g_Player.state = PLAYERSTATE_DEATH;
 		PlaySound(SOUND_LABEL_SE_DEATH);
+		SetExplosion(g_Player.pos);
 	}
 
 	if (g_Player.pos.y < (0 + DIAGONAL_Y))
@@ -376,46 +386,79 @@ void MovePlayer(void)
 		g_Player.pos.y = (0 + DIAGONAL_Y);
 		g_Player.state = PLAYERSTATE_DEATH;
 		PlaySound(SOUND_LABEL_SE_DEATH);
+		SetExplosion(g_Player.pos);
 	}
 	else if (g_Player.pos.y > (SCREEN_HEIGHT - DIAGONAL_Y))
 	{
 		g_Player.pos.y = (SCREEN_HEIGHT - DIAGONAL_Y);
 		g_Player.state = PLAYERSTATE_DEATH;
 		PlaySound(SOUND_LABEL_SE_DEATH);
+		SetExplosion(g_Player.pos);
 	}
 
-	//方向転換
-	if (GetKeyboardPress(DIK_D) == true)
-	{	
-		if (GetKeyboardPress(DIK_A) == true)
+	if (g_Player.rotDest.z - g_Player.rot.z < -D3DX_PI)
+	{// -3.14fより小さくなったとき値を3.14fにする
+		g_Player.rotDest.z += D3DX_PI * 2.0f;
+	}
+	else if (g_Player.rotDest.z - g_Player.rot.z > D3DX_PI)
+	{// 3.14fより大きくなったとき値を-3.14fにする
+		g_Player.rotDest.z -= D3DX_PI * 2.0f;
+	}
+	// 向きの更新
+	g_Player.rot.z += (g_Player.rotDest.z - g_Player.rot.z) * 0.08f;
+
+	if (g_Player.rot.z < -D3DX_PI)
+	{// -3.14fより小さくなったとき値に3.14fにする
+		g_Player.rot.z += D3DX_PI * 2.0f;
+	}
+	else if (g_Player.rot.z > D3DX_PI)
+	{// 3.14fより大きくなったとき値を-3.14fにする
+		g_Player.rot.z -= D3DX_PI * 2.0f;
+	}
+
+	//回転
+	if (pXinput->bPressLStick == true)
+	{
+		g_Player.rotDest.z = pXinput->fAngle;
+	}
+
+	if (GetKeyboardPress(DIK_W) == TRUE || pXinput->bPressUP == true)
+	{
+		if (GetKeyboardPress(DIK_A) == TRUE || pXinput->bPressLEFT == true)
 		{
-			g_Player.rot.z -= 0;
+			g_Player.rotDest.z = D3DXToRadian(45);
+		}
+		else if (GetKeyboardPress(DIK_D) == TRUE || pXinput->bPressRIGHT == true)
+		{
+			g_Player.rotDest.z = D3DXToRadian(-45);
 		}
 		else
 		{
-			//右回り
-			g_Player.rot.z -= ROTATE_SPEED;
-		}
-		if (g_Player.rot.z < -D3DX_PI)
-		{
-			g_Player.rot.z += D3DX_PI * 2.0f;
+			g_Player.rotDest.z = 0.0f;
 		}
 	}
-	else if (GetKeyboardPress(DIK_A) == true)
-	{	
-		if (GetKeyboardPress(DIK_D) == true)
+	else if (GetKeyboardPress(DIK_S) == TRUE || pXinput->bPressDOWN == true)
+	{
+		if (GetKeyboardPress(DIK_A) == TRUE || pXinput->bPressLEFT == true)
 		{
-			g_Player.rot.z -= 0;
+			g_Player.rotDest.z = D3DXToRadian(135);
+		}
+		else if (GetKeyboardPress(DIK_D) == TRUE || pXinput->bPressRIGHT == true)
+		{
+			g_Player.rotDest.z = D3DXToRadian(-135);
 		}
 		else
 		{
-			//左周り
-			g_Player.rot.z += ROTATE_SPEED;
+			g_Player.rotDest.z = D3DX_PI;
 		}
-		if (g_Player.rot.z > -D3DX_PI)
-		{
-			g_Player.rot.z -= D3DX_PI * 2.0f;
-		}
+	}
+	else if (GetKeyboardPress(DIK_A) == TRUE || pXinput->bPressLEFT == true)
+	{
+		g_Player.rotDest.z = (D3DX_PI / 2);
+	}
+	else if (GetKeyboardPress(DIK_D) == TRUE || pXinput->bPressRIGHT == true)
+	{
+		g_Player.rotDest.z = (-D3DX_PI / 2);
 	}
 }
 
@@ -490,6 +533,9 @@ void HitPlayer(void)
 				{
 					g_Player.state = PLAYERSTATE_DAMAGE;
 					pEnemy->bUse = false;
+					pEnemy->bDisp = false;
+					//爆発再生
+					SetExplosion(pEnemy->pos);
 					PlaySound(SOUND_LABEL_SE_HIT);
 				}
 				break;
@@ -499,6 +545,9 @@ void HitPlayer(void)
 				{
 					g_Player.state = PLAYERSTATE_DAMAGE;
 					pEnemy->bUse = false;
+					pEnemy->bDisp = false;
+					//爆発再生
+					SetExplosion(pEnemy->pos);
 					PlaySound(SOUND_LABEL_SE_HIT);
 				}
 				break;
@@ -551,6 +600,7 @@ void HitItem(void)
 				g_Player.BulletType = pItem->nType;
 				g_Player.BulletResidue = 0;
 				pItem->bUse = false;
+				pItem->bDisp = false;
 			}
 		}
 	}

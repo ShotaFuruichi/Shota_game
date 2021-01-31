@@ -14,6 +14,7 @@
 #define DIRECTINPUT_VERSION (0x0800)
 #include "dInput.h"		//入力処理に必要
 #include "xaudio2.h"	//サウンド再生に必要
+#include <XInput.h>		//コントローラー
 
 //ライブラリのリンク
 #pragma comment(lib,"d3d9.lib")		//描画処理に必要
@@ -21,10 +22,12 @@
 #pragma comment(lib,"dxguid.lib")	//コンポーネント使用に必要
 #pragma comment(lib,"dInput8.lib")	//入力処理に必要
 #pragma comment(lib,"winmm.lib")	//
+#pragma comment(lib,"xinput.lib")	//コントローラー
 
 //マクロ定義
 #define SCREEN_WIDTH (1920)												//スクリーンの幅
 #define SCREEN_HEIGHT (1080)											//スクリーンの高さ
+#define SCREEN_LEFT (0)													//画面左端
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)	//頂点フォーマット
 
 //頂点フォーマットに合わせた構造体

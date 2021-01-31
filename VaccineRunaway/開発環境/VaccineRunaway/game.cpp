@@ -20,15 +20,16 @@
 #include "item.h"
 #include "stdlib.h"
 #include "time.h"
-#include "ui.h"
-
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
 #define ENEMY_NUM (12)			//敵のfor文で使うやつ
 #define ENEMY_TYPE (3)			//敵の種類数
-#define ENEMY_FREQUENCY (100)	//敵の出現頻度
+#define ENEMY_FREQUENCY (75)	//敵の出現頻度
+#define HIGH_FREQUENCY (25)		//敵の最速出現頻度
+#define CHANGE_FREQUENCY (5)	//何体ごとに出現頻度を早くするか
 #define ITEM_FREQUENCY (500)	//アイテムの出現頻度
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,14 +74,16 @@ HRESULT InitGame(void)
 	//スコアの初期化
 	InitScore();
 
-	//uiの初期化処理
-	InitUi();
-
 	//ポーズ画面の初期化
 	InitPause();
 
 	//サウンドの再生
 	PlaySound(SOUND_LABEL_BGM002);
+
+	/*for (int nCount = 0; nCount < 10; nCount++)
+	{
+		SetEnemy();
+	}*/
 
 	return S_OK;
 }
@@ -95,9 +98,6 @@ void UninitGame(void)
 
 	//ポーズ画面の終了処理
 	UninitPause();
-
-	//uiの終了処理
-	UninitUi();
 
 	//爆発の終了処理
 	UninitExplosion();
@@ -126,11 +126,11 @@ void UninitGame(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateGame(void)
 {
-	FADE fade;
-	fade = GetFade();
+	FADE fade = GetFade();
+	XinputGamepad *pXinput = GetXinputGamepad();
 
 	//ポーズ処理
-	if (GetKeyboardTrigger(DIK_P) == true)
+	if (GetKeyboardTrigger(DIK_P) == true || pXinput->bPressStart == true)
 	{
 		g_bPause = g_bPause ? false : true;
 	}
@@ -166,18 +166,15 @@ void UpdateGame(void)
 		//スコアの更新処理
 		UpdateScore();
 
-		//uiの更新処理
-		UpdateUi();
-		
 		//敵出現
 		g_EnemyCounter++;
 		if (g_EnemyCounter % g_EnemyFrequency == 0)
 		{
 			SetEnemy();
-			if (g_EnemyFrequency > 25)
+			if (g_EnemyFrequency > HIGH_FREQUENCY)
 			{
 				g_EnemyCount++;
-				if (g_EnemyCount % 10 == 0)
+				if (g_EnemyCount % CHANGE_FREQUENCY == 0)
 				{
 					g_EnemyFrequency--;
 				}
@@ -221,9 +218,6 @@ void DrawGame(void)
 
 	//スコアの描画処理
 	DrawScore();
-
-	//uiの描画処理
-	DrawUi();
 
 	if (g_bPause == true)
 	{

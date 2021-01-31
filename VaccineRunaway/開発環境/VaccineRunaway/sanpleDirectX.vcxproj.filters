@@ -66,10 +66,10 @@
     <ClCompile Include="highscore.cpp">
       <Filter>リソース ファイル\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ui.cpp">
+    <ClCompile Include="tutorial.cpp">
       <Filter>リソース ファイル\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="tutorial.cpp">
+    <ClCompile Include="xinput_pad.cpp">
       <Filter>リソース ファイル\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,10 +125,10 @@
     <ClInclude Include="highscore.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ui.h">
+    <ClInclude Include="tutorial.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="tutorial.h">
+    <ClInclude Include="xinput_pad.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

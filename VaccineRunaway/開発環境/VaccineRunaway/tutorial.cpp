@@ -8,6 +8,7 @@
 #include "tutorial.h"
 #include "fade.h"
 #include "input.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -28,7 +29,7 @@ HRESULT InitTutorial(void)
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\tutorial1.jpg", &g_pTextureTutorial);
+	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\tutorial0.jpg", &g_pTextureTutorial);
 
 	//頂点バッファの生成
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &g_pVtxBuffTutorial, NULL)))
@@ -94,13 +95,13 @@ void UninitTutorial(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateTutorial(void)
 {
-	FADE fade;
-	fade = GetFade();
+	FADE fade= GetFade();
+	XinputGamepad *pXinput = GetXinputGamepad();
 
 	//画面遷移
 	if (fade == FADE_NONE)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN) == true)
+		if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressStart == true || pXinput->bPressA)
 		{
 			SetFade(FADE_OUT, MODE_GAME);
 		}

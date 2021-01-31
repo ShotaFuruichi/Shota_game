@@ -154,7 +154,7 @@ void UpdateBullet(void)
 				for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
 				{
 					//画面外チェック
-					if (pBullet->pos.y < 0 || pBullet->pos.y > 1080 || pBullet->pos.x < 0 || pBullet->pos.x > 1920)
+					if (pBullet->pos.y < 0 || pBullet->pos.y > SCREEN_HEIGHT || pBullet->pos.x < 0 || pBullet->pos.x > SCREEN_WIDTH)
 					{
 					pBullet->bUse = false;
 					}

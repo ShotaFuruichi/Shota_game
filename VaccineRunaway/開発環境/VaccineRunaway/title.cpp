@@ -9,6 +9,7 @@
 #include "input.h"
 #include "sound.h"
 #include "fade.h"
+#include "xinput_pad.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -52,7 +53,7 @@ HRESULT InitTitle(void)
 	pDevice = GetDevice();
 
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\bg00000.jpg", &g_pTextureTitleBg);			//背景
+	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\bg00000.jpg", &g_pTextureTitleBg);		//背景
 	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\title100.png", &g_pTextureTitleLogo);	//ロゴ
 	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\sign000.png", &g_pTextureTitleSign);		//サイン
 
@@ -232,6 +233,7 @@ void UpdateTitle(void)
 {
 	//変数宣言
 	FADE fade;
+	XinputGamepad *pXinput = GetXinputGamepad();
 	fade = GetFade();
 
 	//ロゴ移動
@@ -256,7 +258,7 @@ void UpdateTitle(void)
 	}
 
 	//エンターキーを押したとき
-	if (GetKeyboardTrigger(DIK_RETURN) == true)
+	if (GetKeyboardTrigger(DIK_RETURN) == true || pXinput->bPressStart == true || pXinput->bPressA)
 	{
 		if (g_posLogo.y == LOGO_STOP)
 		{

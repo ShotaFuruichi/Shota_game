@@ -38,13 +38,13 @@ HRESULT InitEnemy(void)
 
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\enemy.png", &g_pTextureEnemy[ENEMYTYPE_NORMAL]);
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\enemy.png", &g_pTextureEnemy[ENEMYTYPE_BIG]);
+	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\enemy2.png", &g_pTextureEnemy[ENEMYTYPE_BIG]);
 	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\enemy002.png", &g_pTextureEnemy[ENEMYTYPE_SHOT]);
 
 	//変数の初期化
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 	{	
-		g_aEnemy[nCntEnemy].pos = D3DXVECTOR3(10000.0f, 0.0f, 0.0f);
+		g_aEnemy[nCntEnemy].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aEnemy[nCntEnemy].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aEnemy[nCntEnemy].nType = NULL;
 		g_aEnemy[nCntEnemy].bUse = false;
@@ -52,6 +52,7 @@ HRESULT InitEnemy(void)
 		g_aEnemy[nCntEnemy].nCounterState = NULL;
 		g_aEnemy[nCntEnemy].nLife = MAX_LIFE;
 		g_aEnemy[nCntEnemy].bSwitch = false;
+		g_aEnemy[nCntEnemy].bDisp = false;
 	}
 
 	//頂点バッファの生成
@@ -151,52 +152,54 @@ void UpdateEnemy(void)
 
 			//進む方向
 			if (pEnemy->bSwitch == false)
-			{
+			{	
 				if (pEnemy->pos.x < (SCREEN_WIDTH / 2))
-				{
-					pEnemy->move.x = ENEMY_SPEED;
-					if (pEnemy->pos.x > 0 - ENEMY_SIZE && pEnemy->pos.x < SCREEN_WIDTH + ENEMY_SIZE)
-					{
-						pEnemy->bSwitch = true;
+				{	//敵が画面中央より左側にいるとき
+					if (pEnemy->nType == ENEMYTYPE_SHOT)
+					{	//速い敵
+						pEnemy->move.x = SHOTENEMY_SPEED;
 					}
-					
+					else
+					{	//通常敵
+						pEnemy->move.x = ENEMY_SPEED;
+					}
 				}
 				else if (pEnemy->pos.x >(SCREEN_WIDTH / 2))
-				{
-					pEnemy->move.x = -ENEMY_SPEED;
-					if (pEnemy->pos.x > 0 - ENEMY_SIZE && pEnemy->pos.x < SCREEN_WIDTH + ENEMY_SIZE)
-					{
-						pEnemy->bSwitch = true;
+				{	//敵が中央よりも右側にいるとき
+					if (pEnemy->nType == ENEMYTYPE_SHOT)
+					{	//速い敵
+						pEnemy->move.x = -SHOTENEMY_SPEED;
+					}
+					else
+					{	//通常敵
+						pEnemy->move.x = -ENEMY_SPEED;
 					}
 				}
+
+				if (pEnemy->pos.x > 0 + ENEMY_SIZE && pEnemy->pos.x < SCREEN_WIDTH - ENEMY_SIZE)
+				{	//画面内に入ったら次に画面外に出た時に消えるようにする
+					pEnemy->bSwitch = true;
+				}
+				pEnemy->bDisp = true;
 			}
+
 			if (pEnemy->bSwitch == true)
 			{
-				if (pEnemy->pos.x < 0 - ENEMY_SIZE)
-				{
+				if (pEnemy->pos.x < 0 - ENEMY_SIZE || pEnemy->pos.x > SCREEN_WIDTH + ENEMY_SIZE)
+				{	//画面外に出たら消去
 					pEnemy->bUse = false;
-					pEnemy->bSwitch = false;
-				}
-				else if (pEnemy->pos.x > SCREEN_WIDTH + ENEMY_SIZE)
-				{
-					pEnemy->bUse = false;
+					pEnemy->bDisp = false;
 					pEnemy->bSwitch = false;
 				}
 			}
-		}
-	}
 
-	//被弾時の処理
-	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++, pEnemy++)
-	{
-		if (pEnemy->bUse == true)
-		{	//敵が使用されているとき
 			switch (g_aEnemy[g_nEnemyNumber[nCntEnemy]].state)
 			{
-			case ENEMYSTATE_DAMAGE:
+			case ENEMYSTATE_DAMAGE:	//ダメージを受けた時
 				g_aEnemy[g_nEnemyNumber[nCntEnemy]].nCounterState--;
+
 				if (g_aEnemy[g_nEnemyNumber[nCntEnemy]].nCounterState <= 0)
-				{
+				{	//状態カウンタが0以下になった時に元に戻す
 					g_aEnemy[g_nEnemyNumber[nCntEnemy]].state = ENEMYSTATE_NORMAL;
 
 					//頂点バッファをロックし、頂点情報へのポインタを取得
@@ -213,6 +216,9 @@ void UpdateEnemy(void)
 					//頂点バッファをアンロックする
 					g_pVtxBuffEnemy->Unlock();
 				}
+				break;
+
+			default:
 				break;
 			}
 		}
@@ -239,7 +245,7 @@ void DrawEnemy(void)
 	//ポリゴンの描画
 	for (int nCntEnemy = 0; nCntEnemy < MAX_ENEMY; nCntEnemy++)
 	{
-		if (g_aEnemy[nCntEnemy].bUse == true)
+		if (g_aEnemy[nCntEnemy].bDisp == true)
 		{
 			//テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureEnemy[g_aEnemy[nCntEnemy].nType]);
@@ -264,34 +270,20 @@ void SetEnemy(void)
 	{
 		if (pEnemy->bUse == false)
 		{	//敵が使用されていないとき
-			pEnemy->nType = (int)GetRandom(0, 2);
 			nPos = (int)GetRandom(0, 1);
-			switch (pEnemy->nType)
-			{
-			case ENEMYTYPE_BIG:
-				switch (nPos)
-				{
-				case 0:
-					pEnemy->pos.x = GetRandom(SCREEN_WIDTH + BIGENEMY_SIZE, SCREEN_WIDTH + 200.0f);
-					break;
-				case 1:
-					pEnemy->pos.x = GetRandom(-200.0f, 0.0f - BIGENEMY_SIZE);
-					break;
-				}
-				break;
 
-			default:
-				switch (nPos)
-				{
-				case 0:
-					pEnemy->pos.x = GetRandom(SCREEN_WIDTH + ENEMY_SIZE, SCREEN_WIDTH + 200.0f);
-					break;
-				case 1:
-					pEnemy->pos.x = GetRandom(-200.0f, 0.0f - ENEMY_SIZE);
-					break;
-				}
+			switch (nPos)
+			{
+			case 0:
+				pEnemy->pos.x = SCREEN_WIDTH + BIGENEMY_SIZE;
+				break;
+			case 1:
+				pEnemy->pos.x = SCREEN_LEFT - BIGENEMY_SIZE;
+				break;
 			}
-			pEnemy->pos.y = GetRandom(50.0f + BIGENEMY_SIZE, SCREEN_HEIGHT - BIGENEMY_SIZE);
+			pEnemy->pos.y = GetRandom(100.0f + BIGENEMY_SIZE, SCREEN_HEIGHT - BIGENEMY_SIZE);
+
+			pEnemy->nType = (int)GetRandom(0, 2);
 
 			//敵を使用する
 			pEnemy->bUse = true;
@@ -360,24 +352,28 @@ void SetVertexBigEnemy(int nIdx)
 ////////////////////////////////////////////////////////////////////////////////
 bool HitEnemy(int nIdx, int nDamage)
 {
+	//ライフをダメージ分減少
 	g_aEnemy[nIdx].nLife -= nDamage;
+
 	if (g_aEnemy[nIdx].nLife <= 0)
-	{
-		switch (g_aEnemy[nIdx].nType)
+	{	//ライフが0以下になった時
+		if(g_aEnemy[nIdx].nType == ENEMYTYPE_BIG)
 		{
-		case ENEMYTYPE_BIG:
 			for (int nCntEnemy = 0; nCntEnemy < 2; nCntEnemy++)
-			{
+			{	//大きいタイプの敵を倒したときは敵を二体セット
 				SetEnemy();
 			}
-			break;
 		}
+
+		//敵を破棄
 		g_aEnemy[nIdx].bUse = false;
+		g_aEnemy[nIdx].bDisp = false;
 		g_aEnemy[nIdx].bSwitch = false;
 
 		//爆発再生
 		SetExplosion(g_aEnemy[nIdx].pos);
 
+		//タイプごとにスコアを加算
 		switch (g_aEnemy[nIdx].nType)
 		{
 		case ENEMYTYPE_NORMAL:

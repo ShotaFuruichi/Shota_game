@@ -12,6 +12,8 @@
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
 #define POS_X (750.0f)		//スコアのX座標
+#define SCORE_WIDTH (45.0f)	//スコアの大きさX
+#define SCORE_HEIGHT (50.0f)//スコアの大きさY
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -50,10 +52,10 @@ HRESULT InitScore(void)
 	for (int nCntScore = 0; nCntScore < MAX_SCORE; nCntScore++)
 	{
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(POS_X + (nCntScore * 45.0f), 50.0f,0);
-		pVtx[1].pos = D3DXVECTOR3(POS_X + (nCntScore * 45.0f), 0, 0);
-		pVtx[2].pos = D3DXVECTOR3(POS_X + ((nCntScore + 1) * 45.0f), 50.0f, 0);
-		pVtx[3].pos = D3DXVECTOR3(POS_X + ((nCntScore + 1) * 45.0f), 0, 0);
+		pVtx[0].pos = D3DXVECTOR3(POS_X + (nCntScore * SCORE_WIDTH), SCORE_HEIGHT,0);
+		pVtx[1].pos = D3DXVECTOR3(POS_X + (nCntScore * SCORE_WIDTH), 0, 0);
+		pVtx[2].pos = D3DXVECTOR3(POS_X + ((nCntScore + 1) * SCORE_WIDTH), SCORE_HEIGHT, 0);
+		pVtx[3].pos = D3DXVECTOR3(POS_X + ((nCntScore + 1) * SCORE_WIDTH), 0, 0);
 
 		//rhwの設定
 		pVtx[0].rhw = 1.0f;

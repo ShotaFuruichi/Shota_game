@@ -10,7 +10,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
-#define ITEM_SPEED (2.0f)				//アイテムの移動量
+#define ITEM_SPEED (2.0f)	//アイテムの移動量
+#define ITEM_TOP (200)		//アイテム生成の上範囲
+#define ITEM_BOTTOM (880)	//アイテム生成の下範囲
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -38,11 +40,12 @@ HRESULT InitItem(void)
 
 	for (int nCntItem = 0; nCntItem < MAX_ITEM; nCntItem++)
 	{
-		g_aItem[MAX_ITEM].bUse = false;
-		g_aItem[MAX_ITEM].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_aItem[MAX_ITEM].nType = NULL;
-		g_aItem[MAX_ITEM].pos = D3DXVECTOR3(30000.0f, 0.0f, 0.0f);
-		g_aItem[MAX_ITEM].bSwitch = false;
+		g_aItem[nCntItem].bUse = false;
+		g_aItem[nCntItem].move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aItem[nCntItem].nType = NULL;
+		g_aItem[nCntItem].pos = D3DXVECTOR3(30000.0f, 0.0f, 0.0f);
+		g_aItem[nCntItem].bSwitch = false;
+		g_aItem[nCntItem].bDisp = false;
 	}
 
 	//頂点バッファの生成
@@ -117,7 +120,6 @@ void UpdateItem(void)
 	ITEM *pItem;
 	pItem = &g_aItem[0];
 
-
 	for (int nCntItem = 0; nCntItem < MAX_ITEM; nCntItem++, pItem++)
 	{
 		if (pItem->bUse == true)
@@ -131,37 +133,37 @@ void UpdateItem(void)
 			if (pItem->bSwitch == false)
 			{
 				if (pItem->pos.x < (SCREEN_WIDTH / 2))
-				{
+				{	//画面中央よりも左側にいるとき
 					pItem->move.x = ITEM_SPEED;
-					if (pItem->pos.x > 0 - ITEM_SIZEX && pItem->pos.x < SCREEN_WIDTH + ITEM_SIZEX)
-					{
-						pItem->bSwitch = true;
-					}
 
 				}
 				else if (pItem->pos.x >(SCREEN_WIDTH / 2))
-				{
+				{	//画面中央よりも右側にいるとき
 					pItem->move.x = -ITEM_SPEED;
-					if (pItem->pos.x > 0 - ITEM_SIZEX && pItem->pos.x < SCREEN_WIDTH + ITEM_SIZEX)
-					{
-						pItem->bSwitch = true;
-					}
 				}
+
+				if (pItem->pos.x > SCREEN_LEFT + ITEM_SIZEX && pItem->pos.x < SCREEN_WIDTH - ITEM_SIZEX)
+				{	//初めて画面内に入った時に画面外に出ると消えるようにする
+					pItem->bSwitch = true;
+				}
+
+				pItem->bDisp = true;
 			}
 			if (pItem->bSwitch == true)
 			{
-				if (pItem->pos.x < 0 - ITEM_SIZEX)
+				if (pItem->pos.x < SCREEN_LEFT - ITEM_SIZEX)
 				{
 					pItem->bUse = false;
+					pItem->bDisp = false;
 					pItem->bSwitch = false;
 				}
 				else if (pItem->pos.x > SCREEN_WIDTH + ITEM_SIZEX)
 				{
 					pItem->bUse = false;
+					pItem->bDisp = false;
 					pItem->bSwitch = false;
 				}
 			}
-			break;	
 		}
 	}
 }
@@ -186,7 +188,7 @@ void DrawItem(void)
 	//ポリゴンの描画
 	for (int nCntItem = 0; nCntItem < MAX_ITEM; nCntItem++)
 	{
-		if (g_aItem[nCntItem].bUse == true)
+		if (g_aItem[nCntItem].bDisp == true)
 		{
 			//テクスチャの設定
 			pDevice->SetTexture(0, g_pTextureItem[g_aItem[nCntItem].nType]);
@@ -219,13 +221,13 @@ void SetItem(void)
 			switch (nPos)
 			{
 			case 0:
-				pItem->pos.x = GetRandom(SCREEN_WIDTH + ITEM_SIZEX, SCREEN_WIDTH + 200.0f);
+				pItem->pos.x = SCREEN_WIDTH + ITEM_SIZEX;
 				break;
 			case 1:
-				pItem->pos.x = GetRandom(-200.0f, 0.0f - ITEM_SIZEX);
+				pItem->pos.x = 0.0f - ITEM_SIZEX;
 				break;
 			}
-			pItem->pos.y = GetRandom(50.0f + ITEM_SIZEY, SCREEN_HEIGHT - ITEM_SIZEY);
+			pItem->pos.y = GetRandom(ITEM_TOP, ITEM_BOTTOM);
 
 			//アイテムを使用する
 			pItem->bUse = true;
@@ -256,7 +258,6 @@ void SetVertexItem(int nIdx)
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffItem->Unlock();
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////

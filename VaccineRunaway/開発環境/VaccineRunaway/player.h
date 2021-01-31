@@ -29,6 +29,7 @@ typedef struct
 {
 	D3DXVECTOR3 pos;	//ˆÊ’u
 	D3DXVECTOR3 rot;	//‰ñ“]Šp
+	D3DXVECTOR3 rotDest;//–Ú•W‚Ì‰ñ“]Šp
 	float fLength;		//’†S‚©‚ç‚Ì‘ÎŠpü‚Ü‚Å‚Ì’·‚³
 	float fAngle;		//‘ÎŠpü‚ÌŠp“x
 	int nLife;			//‘Ì—Í
