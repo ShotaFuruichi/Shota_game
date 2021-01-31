@@ -171,8 +171,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 ////////////////////////////////////////////////////////////////////////////////
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	int nID;
-	
 	switch (uMsg)
 	{
 	case WM_DESTROY:	//ウィンドウを破棄する
@@ -180,26 +178,14 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_CLOSE:	//×を押したとき
-		nID = MessageBox(NULL, "本当に終了してもよろしいですか？", "終了", MB_YESNO | MB_ICONQUESTION);
-		if (nID == IDYES)
-		{
-			DestroyWindow(hWnd);	//WM_DESTROY メッセージを返す
-		}
-		else
-		{
-			return 0;	//これがないと終了
-		}
+		DestroyWindow(hWnd);	//WM_DESTROY メッセージを返す
 		break;
 
 	case WM_KEYDOWN:	//キー入力をしたとき
 		switch (wParam)
 		{
 		case VK_ESCAPE:		//エスケープキー
-			nID = MessageBox(NULL, "本当に終了してもよろしいですか？", "終了", MB_YESNO | MB_ICONQUESTION | MB_TOPMOST);
-			if (nID == IDYES)
-			{
-				DestroyWindow(hWnd);	//WM_DESTROY メッセージを返す
-			}
+			DestroyWindow(hWnd);	//WM_DESTROY メッセージを返す
 			break;
 
 		default:
