@@ -50,8 +50,6 @@ void LoadGamepad(void)
 	}
 	else
 	{
-		// キーボードの更新処理
-		UpdateKeyboard();
 	}
 }
 
