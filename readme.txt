@@ -1,4 +1,8 @@
 ファイル内容
 |
-|-VaccineRunaway (制作No.1)
-|-Snowman (制作No.2)
+|-VaccineRunaway (制作No.1)☆☆
+| 初制作ゲーム。色々と要素を入れることができて 
+|
+|-Snowman (制作No.2)☆
+|
+|
