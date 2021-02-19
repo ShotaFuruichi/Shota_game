@@ -1,0 +1,59 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//Contents	: 敵の処理 [enemy.h]
+//Author	: ShotaFuruichi
+//Since		: 2021/02/15
+//
+////////////////////////////////////////////////////////////////////////////////
+#ifndef _ENEMY_H_
+#define _ENEMY_H_
+#include "main.h"
+#include "player.h"
+
+////////////////////////////////////////////////////////////////////////////////
+//マクロ定義
+////////////////////////////////////////////////////////////////////////////////
+#define MAX_MODEL_ENEMY (6)
+#define ENEMY_APPEARX (0)
+#define ENEMY_APPEARY (10)
+#define ENEMY_APPEARZ (0)
+#define ATTACK_INTERVAL (300)
+#define LIFE_ENEMY (50000)
+
+////////////////////////////////////////////////////////////////////////////////
+//敵の構造体
+////////////////////////////////////////////////////////////////////////////////
+typedef struct
+{
+	D3DXVECTOR3 pos;				//位置
+	D3DXVECTOR3 posOld;				//前回更新時の位置
+	D3DXVECTOR3 rot;				//向き
+	D3DXVECTOR3 rotDest;			//目標の向き
+	D3DXMATRIX mtxWorld;			//ワールドマトリックス
+	MOTION nowMotion;				//現在のモーション
+	MODEL aModel[MAX_MODEL_ENEMY];	//モデル(パーツ)
+	int nNumModel;					//モデル(パーツ)数
+	int AttackCounter;				//攻撃間隔
+	int nLife;						//体力
+} ENEMY;
+
+////////////////////////////////////////////////////////////////////////////////
+//プロトタイプ宣言
+////////////////////////////////////////////////////////////////////////////////
+void InitEnemy(void);
+void UninitEnemy(void);
+void UpdateEnemy(void);
+void DrawEnemy(void);
+
+void AttackEnemy(void);
+void StateEnemy(void);
+
+void MotionEnemy(void);
+void MotionEnemyNeutral(void);
+void MotionEnemyMove(void);
+void MotionEnemyJump(void);
+void MotionEnemyAction(void);
+
+ENEMY *GetEnemy(void);
+
+#endif
