@@ -14,9 +14,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define SEC_ONE (60)							//1秒
 	
-#define MAX_MODEL_PLAYER (10)					//モデルの最大数
-#define PLAYER_SIZEXZ (10.0f)					//プレイヤーのサイズXZ軸
-#define PLAYER_SIZEY (35.0f)					//プレイヤーのサイズY軸
+#define MAGIC_DAMAGE (2000)				//魔法攻撃の威力
+
+#define MAX_MODEL_PLAYER (6)					//モデルの最大数
+#define PLAYER_SIZEXZ (45.0f)					//プレイヤーのサイズXZ軸
+#define PLAYER_SIZEY (80.0f)					//プレイヤーのサイズY軸
 #define LIFE_PLAYER (10000)						//プレイヤーの体力
 #define MP_PLAYER (8000)						//mpの最大値
 #define MAX_COOLDOWN (SEC_ONE * 2)				//クールダウン
@@ -72,7 +74,6 @@ typedef struct
 	D3DXVECTOR3 rotDest;			//目標の向き
 	D3DXMATRIX mtxWorld;			//ワールドマトリックス
 	MOTION nowMotion;				//現在のモーション
-	bool bA;						//当たったか
 	bool bMove;						//動いているか
 	bool bChant;					//詠唱中かどうか
 	bool bUseSkill;					//スキルを使えるか

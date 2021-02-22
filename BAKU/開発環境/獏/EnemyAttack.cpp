@@ -6,6 +6,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 #include "EnemyAttack.h"
+#include "enemy.h"
 #include "player.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +17,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define MAX_ENEMYATTACK (64)	//UŒ‚‚ÌÅ‘å”
 #define ATTACK_TIME (120)		//‰~‚ªŒ»‚ê‚Ä‚©‚çUŒ‚‚ªs‚í‚ê‚é‚Ü‚Å‚Ì’·‚³
-#define ATTACK_SIZE (250)		//‰~‚Ì‘å‚«‚³
+#define ATTACK_SIZE (450)		//‰~‚Ì‘å‚«‚³
+
 
 ////////////////////////////////////////////////////////////////////////////////
 //ƒOƒ[ƒoƒ‹•Ï”
@@ -136,7 +138,6 @@ void UpdateEnemyAttack(void)
 			{
 				if (fDis[nCntAttack] <= fSize)
 				{
-					player->bA = true;
 					player->nLife -= 1000;
 				}
 				g_aEnemyAttack[nCntAttack].bUse = false;
@@ -211,15 +212,27 @@ void DrawEnemyAttack(void)
 ////////////////////////////////////////////////////////////////////////////////
 void SetEnemyAttack(void)
 {
+	//•Ï”éŒ¾
 	PLAYER *player = GetPlayer();
+	ENEMY *enemy = GetEnemy();
+	int nType = GetRandom(ENEMYATTACKTYPE_1, ENEMYATTACKTYPE_2);
 
 	for (int nCntAttack = 0; nCntAttack < MAX_ENEMYATTACK; nCntAttack++)
 	{
 		if (g_aEnemyAttack[nCntAttack].bUse == false)
 		{
-			g_aEnemyAttack[nCntAttack].pos = D3DXVECTOR3(player->pos.x + GetRandom(-500, 500), 1.0f, player->pos.z + GetRandom(-500, 500));
-			g_aEnemyAttack[nCntAttack].bUse = true;
-			g_aEnemyAttack[nCntAttack].nTime = ATTACK_TIME;
+			switch (nType)
+			{
+			case ENEMYATTACKTYPE_1:
+				g_aEnemyAttack[nCntAttack].pos = D3DXVECTOR3(player->pos.x + GetRandom(-500, 500), 1.0f, player->pos.z + GetRandom(-500, 500));
+				g_aEnemyAttack[nCntAttack].bUse = true;
+				g_aEnemyAttack[nCntAttack].nTime = ATTACK_TIME;
+				break;
+			case ENEMYATTACKTYPE_2:
+				g_aEnemyAttack[nCntAttack].pos = D3DXVECTOR3(enemy->pos.x, 1.0f, enemy->pos.z);
+				g_aEnemyAttack[nCntAttack].bUse = true;
+				g_aEnemyAttack[nCntAttack].nTime = ATTACK_TIME;
+			}
 			break;
 		}
 	}

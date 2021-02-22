@@ -455,7 +455,6 @@ void DrawText(void)
 	nNum += sprintf(&aStr[nNum], "カメラ回転情報:%f|%f|%f\n", camera->rot.x, camera->rot.y, camera->rot.z);
 	nNum += sprintf(&aStr[nNum], "プレイヤー座標:%f|%f|%f\n", player->pos.x, player->pos.y, player->pos.z);
 	nNum += sprintf(&aStr[nNum], "プレイヤー回転:%f|%f|%f\n", player->rot.x, player->rot.y, player->rot.z);
-	nNum += sprintf(&aStr[nNum], "プレイヤーに当たったか:%d\n", player->bA);
 	nNum += sprintf(&aStr[nNum], "プレイヤーの体力:%d\n", player->nLife);
 	nNum += sprintf(&aStr[nNum], "プレイヤーのMP:%d\n", player->nMP);
 	nNum += sprintf(&aStr[nNum], "プレイヤークールダウン:%f\n", player->nCooldown / 60.0f);

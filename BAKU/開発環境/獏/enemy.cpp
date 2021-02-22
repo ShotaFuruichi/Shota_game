@@ -8,6 +8,7 @@
 #include "enemy.h"
 #include "EnemyAttack.h"
 #include "fade.h"
+#include "player.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -93,6 +94,8 @@ void UninitEnemy(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateEnemy(void)
 {
+	PLAYER *player = GetPlayer();
+
 	if (g_Enemy.nowMotion != MOTION_JUMP && g_Enemy.nowMotion != MOTION_ACTION)
 	{
 		g_Enemy.nowMotion = MOTION_NEUTRAL;
@@ -104,6 +107,20 @@ void UpdateEnemy(void)
 	}
 	
 	AttackEnemy();
+
+	if (g_Enemy.rot.y < -D3DX_PI)
+	{// -3.14fより小さくなったとき値に3.14fにする
+		g_Enemy.rot.y += D3DX_PI * 2.0f;
+	}
+	else if (g_Enemy.rot.y > D3DX_PI)
+	{// 3.14fより大きくなったとき値を-3.14fにする
+		g_Enemy.rot.y -= D3DX_PI * 2.0f;
+	}
+
+	D3DXVECTOR3 vector = player->pos - g_Enemy.pos;
+	float fAngle = atan2f(vector.x, vector.z);
+
+	g_Enemy.rot.y = fAngle;
 
 	g_Enemy.aModel[1].rot.x -= 0.01f;
 	g_Enemy.aModel[1].rot.y -= 0.01f;
@@ -198,6 +215,7 @@ void AttackEnemy(void)
 	g_Enemy.AttackCounter++;
 	if (g_Enemy.AttackCounter % ATTACK_INTERVAL == 0)
 	{
+
 		for (int nAttack = 0; nAttack < 4; nAttack++)
 		{
 			SetEnemyAttack();

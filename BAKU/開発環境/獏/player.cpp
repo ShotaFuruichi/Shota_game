@@ -17,7 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
-#define PMOVE_SPEED (4.0f)				//プレイヤーの移動速度
+#define PMOVE_SPEED (5.0f)				//プレイヤーの移動速度
 #define MAX_INVI (4)					//透明な壁の枚数
 #define EX_INVI (1000)					//透明な壁の大きさ
 #define PLAYER_APPEARX (EX_INVI - 30)	//プレイヤーの出現位置X座標
@@ -27,7 +27,6 @@
 #define ATTACK_REACH (500.0f)			//物理攻撃が届く距離
 
 #define ATTACK_DAMAGE (500)				//物理攻撃の威力
-#define MAGIC_DAMAGE (2000)				//魔法攻撃の威力
 #define HEAL_POWER (800)				//回復魔法の効力
 
 #define MAGIC_MP (600)					//攻撃魔法の消費MP
@@ -57,16 +56,12 @@ void InitPlayer(void)
 	pDevice = GetDevice();
 
 	//Xファイルの読み込み
-	D3DXLoadMeshFromX("data/model/00_body.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[0].pBufferMat, NULL, &g_Player.aModel[0].nNumMat, &g_Player.aModel[0].pMesh);
-	D3DXLoadMeshFromX("data/model/01_head.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[1].pBufferMat, NULL, &g_Player.aModel[1].nNumMat, &g_Player.aModel[1].pMesh);
-	D3DXLoadMeshFromX("data/model/02_armR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[2].pBufferMat, NULL, &g_Player.aModel[2].nNumMat, &g_Player.aModel[2].pMesh);
-	D3DXLoadMeshFromX("data/model/03_handR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[3].pBufferMat, NULL, &g_Player.aModel[3].nNumMat, &g_Player.aModel[3].pMesh);
-	D3DXLoadMeshFromX("data/model/04_armL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[4].pBufferMat, NULL, &g_Player.aModel[4].nNumMat, &g_Player.aModel[4].pMesh);
-	D3DXLoadMeshFromX("data/model/05_handL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[5].pBufferMat, NULL, &g_Player.aModel[5].nNumMat, &g_Player.aModel[5].pMesh);
-	D3DXLoadMeshFromX("data/model/06_legR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[6].pBufferMat, NULL, &g_Player.aModel[6].nNumMat, &g_Player.aModel[6].pMesh);
-	D3DXLoadMeshFromX("data/model/07_footR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[7].pBufferMat, NULL, &g_Player.aModel[7].nNumMat, &g_Player.aModel[7].pMesh);
-	D3DXLoadMeshFromX("data/model/08_legL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[8].pBufferMat, NULL, &g_Player.aModel[8].nNumMat, &g_Player.aModel[8].pMesh);
-	D3DXLoadMeshFromX("data/model/09_footL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[9].pBufferMat, NULL, &g_Player.aModel[9].nNumMat, &g_Player.aModel[9].pMesh);
+	D3DXLoadMeshFromX("data/model/body.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[0].pBufferMat, NULL, &g_Player.aModel[0].nNumMat, &g_Player.aModel[0].pMesh);
+	D3DXLoadMeshFromX("data/model/head.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[1].pBufferMat, NULL, &g_Player.aModel[1].nNumMat, &g_Player.aModel[1].pMesh);
+	D3DXLoadMeshFromX("data/model/armR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[2].pBufferMat, NULL, &g_Player.aModel[2].nNumMat, &g_Player.aModel[2].pMesh);
+	D3DXLoadMeshFromX("data/model/armL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[3].pBufferMat, NULL, &g_Player.aModel[3].nNumMat, &g_Player.aModel[3].pMesh);
+	D3DXLoadMeshFromX("data/model/legR.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[4].pBufferMat, NULL, &g_Player.aModel[4].nNumMat, &g_Player.aModel[4].pMesh);
+	D3DXLoadMeshFromX("data/model/legL.x", D3DXMESH_SYSTEMMEM, pDevice, NULL, &g_Player.aModel[5].pBufferMat, NULL, &g_Player.aModel[5].nNumMat, &g_Player.aModel[5].pMesh);
 
 	g_Player.nNumModel = MAX_MODEL_PLAYER;
 	aPos[0] = D3DXVECTOR3(EX_INVI, 0.0f, EX_INVI);
@@ -76,35 +71,24 @@ void InitPlayer(void)
 
 	//各パーツの階層構造設定
 	g_Player.aModel[0].nIdxModelParent = -1;							//親モデルのインデックスを設定
-	g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 15.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[0].pos = D3DXVECTOR3(0.0f, 45.0f, 0.0f);			//位置(オフセット)の初期設定
 	g_Player.aModel[0].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
 	g_Player.aModel[1].nIdxModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[1].pos = D3DXVECTOR3(0.0f, 15.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[1].pos = D3DXVECTOR3(0.0f, 60.0f, 0.0f);			//位置(オフセット)の初期設定
 	g_Player.aModel[1].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
 	g_Player.aModel[2].nIdxModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[2].pos = D3DXVECTOR3(-7.5f, 12.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[2].pos = D3DXVECTOR3(-13.0f, 57.5f, 2.5f);			//位置(オフセット)の初期設定
 	g_Player.aModel[2].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[3].nIdxModelParent = 2;								//親モデルのインデックスを設定
-	g_Player.aModel[3].pos = D3DXVECTOR3(-10.0f, 0.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[3].nIdxModelParent = 0;								//親モデルのインデックスを設定
+	g_Player.aModel[3].pos = D3DXVECTOR3(13.0f, 57.5f, 2.6f);			//位置(オフセット)の初期設定
 	g_Player.aModel[3].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
 	g_Player.aModel[4].nIdxModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[4].pos = D3DXVECTOR3(7.5f, 12.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[4].pos = D3DXVECTOR3(-10.0f, 7.5f, 2.5f);			//位置(オフセット)の初期設定
 	g_Player.aModel[4].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[5].nIdxModelParent = 4;								//親モデルのインデックスを設定
-	g_Player.aModel[5].pos = D3DXVECTOR3(10.0f, 0.0f, 0.0f);			//位置(オフセット)の初期設定
+	g_Player.aModel[5].nIdxModelParent = 0;								//親モデルのインデックスを設定
+	g_Player.aModel[5].pos = D3DXVECTOR3(10.0f, 7.5f, 2.5f);			//位置(オフセット)の初期設定
 	g_Player.aModel[5].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[6].nIdxModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[6].pos = D3DXVECTOR3(-4.0f, 0.0f, 0.0f);			//位置(オフセット)の初期設定
-	g_Player.aModel[6].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[7].nIdxModelParent = 6;								//親モデルのインデックスを設定
-	g_Player.aModel[7].pos = D3DXVECTOR3(0.0f, -10.0f, 0.0f);			//位置(オフセット)の初期設定
-	g_Player.aModel[7].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[8].nIdxModelParent = 0;								//親モデルのインデックスを設定
-	g_Player.aModel[8].pos = D3DXVECTOR3(4.0f, 0.0f, 0.0f);				//位置(オフセット)の初期設定
-	g_Player.aModel[8].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
-	g_Player.aModel[9].nIdxModelParent = 8;								//親モデルのインデックスを設定
-	g_Player.aModel[9].pos = D3DXVECTOR3(0.0f, -10.0f, 0.0f);			//位置(オフセット)の初期設定
-	g_Player.aModel[9].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				//向きの初期設定
+
 	g_Player.pos = D3DXVECTOR3(PLAYER_APPEARX, 0.0f, PLAYER_APPEARZ);	//プレイヤーの位置の初期設定
 	g_Player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					//プレイヤーの前回更新時の位置の初期設定
 	g_Player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						//プレイヤーの向きの初期設定
@@ -148,17 +132,16 @@ void UninitPlayer(void)
 //更新処理
 ////////////////////////////////////////////////////////////////////////////////
 void UpdatePlayer(void)
-{
+{	
+	//モーションの優先度管理
 	if (g_Player.nowMotion != MOTION_JUMP && g_Player.nowMotion != MOTION_ACTION)
-	{
+	{	
 		g_Player.nowMotion = MOTION_NEUTRAL;
 	}
-	if (GetKeyboardTrigger(DIK_L) == TRUE)
-	{
-		g_Player.bA = false;
-	}
+
 	g_Player.bMove = false;
 
+	//MP回復
 	if (g_Player.nMP != MP_PLAYER)
 	{
 		g_Player.nMpRec++;
@@ -179,7 +162,7 @@ void UpdatePlayer(void)
 	MotionPlayer();
 
 	if (g_Player.nLife <= 0)
-	{
+	{	//プレイヤーの体力が0以下になった場合リザルトへ
 		SetFade(FADE_OUT, MODE_RESULT);
 	}
 }
@@ -284,11 +267,6 @@ void SkillPlayer(void)
 		}
 	}
 
-	if (GetKeyboardTrigger(DIK_RETURN) == TRUE)
-	{
-		SetBullet(D3DXVECTOR3(g_Player.pos.x, g_Player.pos.y + 10.0f, g_Player.pos.z), D3DXVECTOR3(sinf(g_Player.rot.y) * -5.0f, 0.0f, cosf(g_Player.rot.y) * -5.0f), 400);
-	}
-
 	//スキル使用
 	if (g_Player.bUseSkill == true)
 	{
@@ -313,6 +291,7 @@ void SkillPlayer(void)
 			if (GetKeyboardTrigger(DIK_2) == TRUE || pXinput->bPressY == true)
 			{
 				g_Player.skill = SKILL_MAGICBALL;
+				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
 			}
 		}
@@ -322,6 +301,7 @@ void SkillPlayer(void)
 			if (GetKeyboardTrigger(DIK_3) == TRUE || pXinput->bPressX == true)
 			{
 				g_Player.skill = SKILL_HEAL;
+				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
 			}
 		}
@@ -350,9 +330,6 @@ void SkillPlayer(void)
 	//攻撃魔法
 	if (g_Player.skill == SKILL_MAGICBALL)
 	{
-		//ダメージ量
-		int nAttack = GetRandom(MAGIC_DAMAGE, MAGIC_DAMAGE + 500);
-
 		if (g_Player.bChant == false)
 		{
 			g_Player.nChantCounter = (int)CHANT_TIMEMAGIC;
@@ -360,15 +337,9 @@ void SkillPlayer(void)
 		g_Player.nChantCounter--;
 		g_Player.bChant = true;
 
-		if (enemy->nLife - nAttack < 0)
-		{	//攻撃が敵の残りHPを超えたとき0までのダメージに変換
-			nAttack = enemy->nLife;
-		}
-
 		if (g_Player.nChantCounter == 0)
 		{	//詠唱終了時に回復、クールダウンを設定
-			enemy->nLife -= nAttack;
-			g_Player.nCooldown = MAX_COOLDOWN;
+			SetBullet(D3DXVECTOR3(g_Player.pos.x, g_Player.pos.y + 70, g_Player.pos.z));
 			g_Player.skill = SKILL_NONE;
 			g_Player.bChant = false;
 			g_Player.nMP -= MAGIC_MP;
@@ -396,17 +367,20 @@ void SkillPlayer(void)
 		if (g_Player.nChantCounter == 0)
 		{	//詠唱終了時に回復、クールダウンを設定
 			g_Player.nLife += nHeal;
-			g_Player.nCooldown = (2 * SEC_ONE);
 			g_Player.skill = SKILL_NONE;
 			g_Player.bChant = false;
 			g_Player.nMP -= HEAL_MP;
 		}
 	}
 		
-	if (g_Player.bMove == true)
-	{	//動いたら詠唱中段
-		g_Player.skill = SKILL_NONE;
-		g_Player.bChant = false;
+	if (g_Player.bChant == true)
+	{	//詠唱中に動いたら詠唱中断
+		if (g_Player.bMove == true)
+		{
+			g_Player.skill = SKILL_NONE;
+			g_Player.nCooldown = 0;
+			g_Player.bChant = false;
+		}
 	}
 }
 
@@ -654,41 +628,53 @@ void MotionPlayerNeutral(void)
 	static int nNextKey = 0;
 	D3DXVECTOR3 diff[MAX_MODEL_PLAYER];
 	D3DXVECTOR3 next[NEUT_KEY][MAX_MODEL_PLAYER];
-	static int nFrame = 0;
-	int nMaxFrame = 30;
+	static int nFrame = 40;
 	
-	//キー1
-	next[0][0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	next[0][1] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
-	next[0][2] = D3DXVECTOR3(0.0f, -0.25f, 0.5f);
-	next[0][3] = D3DXVECTOR3(0.03f, -0.25f, 0.0f);
-	next[0][4] = D3DXVECTOR3(0.03f, 0.25f, -0.5f);
-	next[0][5] = D3DXVECTOR3(0.03f, 0.25f, 0.0f);
-	next[0][6] = D3DXVECTOR3(0.03f, 0.0f, -0.09f);
-	next[0][7] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
-	next[0][8] = D3DXVECTOR3(0.03f, 0.0f, 0.09f);
-	next[0][9] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+	if (g_Player.bChant == false)
+	{
+		//キー1
+		next[0][0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		next[0][1] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[0][2] = D3DXVECTOR3(0.03f, 0.0f, 0.5f);
+		next[0][3] = D3DXVECTOR3(0.03f, 0.0f, -0.5f);
+		next[0][4] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[0][5] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
 
-	//キー2
-	next[1][0] = D3DXVECTOR3(-0.03f, 0.0f, 0.0f);
-	next[1][1] = D3DXVECTOR3(-0.06f, 0.0f, 0.0f);
-	next[1][2] = D3DXVECTOR3(0.0f, -0.25f, 0.79f);
-	next[1][3] = D3DXVECTOR3(0.03f, -0.53f, 0.0f);
-	next[1][4] = D3DXVECTOR3(0.03f, 0.25f, -0.79f);
-	next[1][5] = D3DXVECTOR3(0.03f, 0.53f, 0.0f);
-	next[1][6] = D3DXVECTOR3(0.06f, 0.0f, -0.09f);
-	next[1][7] = D3DXVECTOR3(0.0f, -0.18f, 0.0f);
-	next[1][8] = D3DXVECTOR3(0.06f, 0.0f, 0.09f);
-	next[1][9] = D3DXVECTOR3(-0.18f, 0.0f, 0.0f);
+		//キー2
+		next[1][0] = D3DXVECTOR3(-0.03f, 0.0f, 0.0f);
+		next[1][1] = D3DXVECTOR3(-0.06f, 0.0f, 0.0f);
+		next[1][2] = D3DXVECTOR3(0.03f, 0.0f, 0.79f);
+		next[1][3] = D3DXVECTOR3(0.03f, 0.0f, -0.79f);
+		next[1][4] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[1][5] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+	}
+	else if (g_Player.bChant == true)
+	{
+		//キー1
+		next[0][0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		next[0][1] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[0][2] = D3DXVECTOR3(0.03f, -1.5f, 0.5f);
+		next[0][3] = D3DXVECTOR3(0.03f, 0.0f, -0.5f);
+		next[0][4] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[0][5] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+
+		//キー2
+		next[1][0] = D3DXVECTOR3(-0.03f, 0.0f, 0.0f);
+		next[1][1] = D3DXVECTOR3(-0.06f, 0.0f, 0.0f);
+		next[1][2] = D3DXVECTOR3(0.03f, -1.5f, 0.5f);
+		next[1][3] = D3DXVECTOR3(0.03f, 0.0f, -0.79f);
+		next[1][4] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+		next[1][5] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
+	}
 	
 	for (int nCntNeut = 0; nCntNeut < MAX_MODEL_PLAYER; nCntNeut++)
 	{
 		diff[nCntNeut] = next[nNextKey][nCntNeut] - g_Player.aModel[nCntNeut].rot;
-		g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + (diff[nCntNeut] / (float)nMaxFrame);
+		g_Player.aModel[nCntNeut].rot += (diff[nCntNeut] / (float)nFrame);
 	}
-	nFrame++;
+	nFrame--;
 
-	if(nFrame > nMaxFrame)
+	if(nFrame == 0)
 	{
 		if (nNextKey == NEUT_KEY - 1)
 		{
@@ -698,7 +684,7 @@ void MotionPlayerNeutral(void)
 		{
 			nNextKey++;
 		}
-		nFrame = 0;
+		nFrame = 40;
 	}
 }
 
@@ -710,65 +696,48 @@ void MotionPlayerMove(void)
 	static int nNextKey = 0;
 	D3DXVECTOR3 diff[MAX_MODEL_PLAYER];
 	D3DXVECTOR3 next[MOVE_KEY][MAX_MODEL_PLAYER];
-	static int nFrame = 0;
-	int nMaxFrame = 8;
+	static int nFrame = 15;
 
 	//キー1
-	next[0][0] = D3DXVECTOR3(-0.4f, -0.16f, 0.0f);
+	next[0][0] = D3DXVECTOR3(-0.3f, -0.16f, 0.0f);
 	next[0][1] = D3DXVECTOR3(0.22f, 0.09f, 0.0f);
 	next[0][2] = D3DXVECTOR3(2.1f, 0.0f, 1.31f);
-	next[0][3] = D3DXVECTOR3(-0.16f, -0.69f, 0.0f);
-	next[0][4] = D3DXVECTOR3(-1.07f, 0.0f, -1.32f);
-	next[0][5] = D3DXVECTOR3(-0.16f, 0.85f, 0.0f);
-	next[0][6] = D3DXVECTOR3(0.88f, 0.0f, 0.0f);
-	next[0][7] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
-	next[0][8] = D3DXVECTOR3(2.02f, 0.0f, 0.0f);
-	next[0][9] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
+	next[0][3] = D3DXVECTOR3(-1.07f, 0.0f, -1.32f);
+	next[0][4] = D3DXVECTOR3(-2.02f, 0.0f, 0.0f);
+	next[0][5] = D3DXVECTOR3(1.5f, 0.0f, 0.0f);
 
 	//キー2
-	next[1][0] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
+	next[1][0] = D3DXVECTOR3(-0.4f, 0.0f, 0.0f);
 	next[1][1] = D3DXVECTOR3(0.31f, 0.0f, 0.0f);
 	next[1][2] = D3DXVECTOR3(2.01f, 0.0f, 1.32f);
-	next[1][3] = D3DXVECTOR3(0.0f, -0.82f, 0.0f);
-	next[1][4] = D3DXVECTOR3(-0.75f, 0.0f, -1.32f);
-	next[1][5] = D3DXVECTOR3(0.0f, 0.82f, 0.0f);
-	next[1][6] = D3DXVECTOR3(-0.34f, 0.0f, 0.0f);
-	next[1][7] = D3DXVECTOR3(-0.38f, 0.0f, 0.0f);
-	next[1][8] = D3DXVECTOR3(1.32f, 0.0f, 0.0f);
-	next[1][9] = D3DXVECTOR3(0.5f, 0.0f, 0.0f);
+	next[1][3] = D3DXVECTOR3(-0.75f, 0.0f, -1.32f);
+	next[1][4] = D3DXVECTOR3(-1.33f, 0.0f, 0.0f);
+	next[1][5] = D3DXVECTOR3(0.83f, 0.0f, 0.0f);
 
 	//キー3
-	next[2][0] = D3DXVECTOR3(-0.4f, 0.15f, 0.0f);
+	next[2][0] = D3DXVECTOR3(-0.3f, 0.15f, 0.0f);
 	next[2][1] = D3DXVECTOR3(0.22f, -0.1f, 0.0f);
 	next[2][2] = D3DXVECTOR3(-1.07f, 0.0f, 1.32f);
-	next[2][3] = D3DXVECTOR3(0.0f, -0.82f, 0.0f);
-	next[2][4] = D3DXVECTOR3(2.1f, 0.0f, -1.32f);
-	next[2][5] = D3DXVECTOR3(0.0f, 0.82f, 0.0f);
-	next[2][6] = D3DXVECTOR3(2.23f, 0.0f, 0.0f);
-	next[2][7] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
-	next[2][8] = D3DXVECTOR3(-0.87f, 0.0f, 0.0f);
-	next[2][9] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
+	next[2][3] = D3DXVECTOR3(2.1f, 0.0f, -1.32f);
+	next[2][4] = D3DXVECTOR3(2.23f, 0.0f, 0.0f);
+	next[2][5] = D3DXVECTOR3(-1.5f, 0.0f, 0.0f);
 
 	//キー4
-	next[3][0] = D3DXVECTOR3(-0.5f, 0.0f, 0.0f);
+	next[3][0] = D3DXVECTOR3(-0.4f, 0.0f, 0.0f);
 	next[3][1] = D3DXVECTOR3(0.31f, 0.0f, 0.0f);
 	next[3][2] = D3DXVECTOR3(-0.75f, 0.0f, 1.32f);
-	next[3][3] = D3DXVECTOR3(0.0f, -0.82f, 0.0f);
-	next[3][4] = D3DXVECTOR3(2.01f, 0.0f, -1.32f);
-	next[3][5] = D3DXVECTOR3(0.0f, 0.82f, 0.0f);
-	next[3][6] = D3DXVECTOR3(1.33f, 0.0f, 0.0f);
-	next[3][7] = D3DXVECTOR3(-0.51f, 0.0f, 0.0f);
-	next[3][8] = D3DXVECTOR3(-0.35f, 0.0f, 0.0f);
-	next[3][9] = D3DXVECTOR3(-0.37f, 0.0f, 0.0f);
+	next[3][3] = D3DXVECTOR3(2.01f, 0.0f, -1.32f);
+	next[3][4] = D3DXVECTOR3(1.33f, 0.0f, 0.0f);
+	next[3][5] = D3DXVECTOR3(-0.83f, 0.0f, 0.0f);
 
 	for (int nCntNeut = 0; nCntNeut < MAX_MODEL_PLAYER; nCntNeut++)
 	{
 		diff[nCntNeut] = next[nNextKey][nCntNeut] - g_Player.aModel[nCntNeut].rot;
-		g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + diff[nCntNeut] / (float)nMaxFrame;
+		g_Player.aModel[nCntNeut].rot += (diff[nCntNeut] / (float)nFrame);
 	}
-	nFrame++;
+	nFrame--;
 
-	if (nFrame > nMaxFrame)
+	if (nFrame == 0)
 	{
 		if (nNextKey == MOVE_KEY - 1)
 		{
@@ -778,7 +747,7 @@ void MotionPlayerMove(void)
 		{
 			nNextKey++;
 		}
-		nFrame = 0;
+		nFrame = 8;
 	}
 }
 
@@ -790,77 +759,56 @@ void MotionPlayerJump(void)
 	static int nNextKey = 0;
 	D3DXVECTOR3 diff[MAX_MODEL_PLAYER];
 	D3DXVECTOR3 next[JUMP_KEY][MAX_MODEL_PLAYER];
-	static int nFrame = 0;
-	int nMaxFrame = 5;
+	static int nFrame = 5;
 
 	//キー1
 	next[0][0] = D3DXVECTOR3(-0.03f, 0.0f, 0.0f);
 	next[0][1] = D3DXVECTOR3(0.03f, 0.0f, 0.0f);
 	next[0][2] = D3DXVECTOR3(0.0f, -0.25f, 0.82f);
-	next[0][3] = D3DXVECTOR3(0.0f, -0.22f, 0.0f);
-	next[0][4] = D3DXVECTOR3(0.0f, 0.25f, -0.82f);
-	next[0][5] = D3DXVECTOR3(0.0f, 0.22f, 0.0f);
-	next[0][6] = D3DXVECTOR3(0.13f, 0.0f, 0.0f);
-	next[0][7] = D3DXVECTOR3(-0.13f, 0.0f, 0.0f);
-	next[0][8] = D3DXVECTOR3(0.13f, 0.0f, 0.0f);
-	next[0][9] = D3DXVECTOR3(-0.13f, 0.0f, 0.0f);
+	next[0][3] = D3DXVECTOR3(0.0f, 0.25f, -0.82f);
+	next[0][4] = D3DXVECTOR3(0.13f, 0.0f, 0.0f);
+	next[0][5] = D3DXVECTOR3(0.13f, 0.0f, 0.0f);
 
 	//キー2
 	next[1][0] = D3DXVECTOR3(0.06f, -0.06f, 0.0f);
 	next[1][1] = D3DXVECTOR3(-0.06f, 0.06f, 0.0f);
 	next[1][2] = D3DXVECTOR3(0.0f, -1.41f, -0.44f);
-	next[1][3] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[1][4] = D3DXVECTOR3(-1.16f, 0.0f, -1.41f);
-	next[1][5] = D3DXVECTOR3(0.0f, 0.91f, 0.0f);
-	next[1][6] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
-	next[1][7] = D3DXVECTOR3(0.25f, 0.0f, 0.0f);
-	next[1][8] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
-	next[1][9] = D3DXVECTOR3(0.44f, 0.0f, 0.0f);
+	next[1][3] = D3DXVECTOR3(-1.16f, 0.0f, -1.41f);
+	next[1][4] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
+	next[1][5] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
 
 	//キー3
 	next[2][0] = D3DXVECTOR3(0.06f, -0.06f, 0.0f);
 	next[2][1] = D3DXVECTOR3(-0.06f, 0.06f, 0.0f);
 	next[2][2] = D3DXVECTOR3(0.0f, -1.41f, -0.64f);
-	next[2][3] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[2][4] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
-	next[2][5] = D3DXVECTOR3(0.0f, 0.91f, 0.0f);
-	next[2][6] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
-	next[2][7] = D3DXVECTOR3(0.25f, 0.0f, 0.0f);
-	next[2][8] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
-	next[2][9] = D3DXVECTOR3(0.44f, 0.0f, 0.0f);
+	next[2][3] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
+	next[2][4] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
+	next[2][5] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
 
 	//キー4
 	next[3][0] = D3DXVECTOR3(0.06f, -0.06f, 0.0f);
 	next[3][1] = D3DXVECTOR3(-0.06f, 0.06f, 0.0f);
 	next[3][2] = D3DXVECTOR3(0.0f, -1.41f, -0.64f);
-	next[3][3] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[3][4] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
-	next[3][5] = D3DXVECTOR3(0.0f, 0.91f, 0.0f);
-	next[3][6] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
-	next[3][7] = D3DXVECTOR3(0.25f, 0.0f, 0.0f);
-	next[3][8] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
-	next[3][9] = D3DXVECTOR3(0.44f, 0.0f, 0.0f);
+	next[3][3] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
+	next[3][4] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
+	next[3][5] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
 
 	//キー5
 	next[4][0] = D3DXVECTOR3(0.06f, -0.06f, 0.0f);
 	next[4][1] = D3DXVECTOR3(-0.06f, 0.06f, 0.0f);
 	next[4][2] = D3DXVECTOR3(0.0f, -1.41f, -0.64f);
-	next[4][3] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[4][4] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
-	next[4][5] = D3DXVECTOR3(0.0f, 0.91f, 0.0f);
-	next[4][6] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
-	next[4][7] = D3DXVECTOR3(0.25f, 0.0f, 0.0f);
-	next[4][8] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
-	next[4][9] = D3DXVECTOR3(0.44f, 0.0f, 0.0f);
+	next[4][3] = D3DXVECTOR3(-1.36f, 0.0f, -1.41f);
+	next[4][4] = D3DXVECTOR3(-1.19f, 0.0f, 0.0f);
+	next[4][5] = D3DXVECTOR3(1.1f, 0.0f, 0.0f);
 
 	for (int nCntNeut = 0; nCntNeut < MAX_MODEL_PLAYER; nCntNeut++)
 	{
 		diff[nCntNeut] = next[nNextKey][nCntNeut] - g_Player.aModel[nCntNeut].rot;
-		g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + diff[nCntNeut] / (float)nMaxFrame;
+		g_Player.aModel[nCntNeut].rot += (diff[nCntNeut] / (float)nFrame);
 	}
-	nFrame++;
+	nFrame--;
 
-	if (nFrame > nMaxFrame)
+	if (nFrame == 0)
 	{
 		if (nNextKey == JUMP_KEY - 1)
 		{
@@ -871,7 +819,7 @@ void MotionPlayerJump(void)
 		{
 			nNextKey++;
 		}
-		nFrame = 0;
+		nFrame = 5;
 	}
 }
 
@@ -884,86 +832,51 @@ void MotionPlayerAction(void)
 	static int nNextKey = 0;
 	D3DXVECTOR3 diff[MAX_MODEL_PLAYER];
 	D3DXVECTOR3 next[ACTION_KEY][MAX_MODEL_PLAYER];
-	static int nFrame = 0;
+	static int nFrame = 12;
 
 	//キー1
 	next[0][0] = D3DXVECTOR3(0.0f, 0.31f, 0.0f);
 	next[0][1] = D3DXVECTOR3(0.0f, -0.31f, 0.0f);
 	next[0][2] = D3DXVECTOR3(0.0f, 0.0f, 1.04f);
-	next[0][3] = D3DXVECTOR3(0.0f, -0.66f, 0.0f);
-	next[0][4] = D3DXVECTOR3(0.0f, 0.0f, -0.66f);
-	next[0][5] = D3DXVECTOR3(0.0f, 0.31f, 0.0f);
-	next[0][6] = D3DXVECTOR3(-0.38f, -0.16f, 0.0f);
-	next[0][7] = D3DXVECTOR3(0.16f, 0.0f, 0.0f);
-	next[0][8] = D3DXVECTOR3(0.35f, -0.16f, 0.0f);
-	next[0][9] = D3DXVECTOR3(-0.16f, 0.0f, 0.0f);
+	next[0][3] = D3DXVECTOR3(0.0f, 0.0f, -0.66f);
+	next[0][4] = D3DXVECTOR3(-0.38f, -0.16f, 0.0f);
+	next[0][5] = D3DXVECTOR3(-0.16f, 0.0f, 0.0f);
 
 	//キー2
 	next[1][0] = D3DXVECTOR3(0.0f, -0.41f, 0.0f);
 	next[1][1] = D3DXVECTOR3(0.0f, 0.22f, 0.0f);
 	next[1][2] = D3DXVECTOR3(0.0f, -1.36f, 0.0f);
-	next[1][3] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	next[1][4] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[1][5] = D3DXVECTOR3(0.0f, 0.66f, 0.0f);
-	next[1][6] = D3DXVECTOR3(0.75f, 0.22f, 0.0f);
-	next[1][7] = D3DXVECTOR3(-0.53f, 0.0f, 0.0f);
-	next[1][8] = D3DXVECTOR3(-0.75f, 0.22f, 0.0f);
-	next[1][9] = D3DXVECTOR3(0.41f, 0.0f, 0.0f);
-
+	next[1][3] = D3DXVECTOR3(0.0f, 0.0f, -1.1f);
+	next[1][4] = D3DXVECTOR3(-0.75f, 0.22f, 0.0f);
+	next[1][5] = D3DXVECTOR3(0.75f, 0.22f, 0.0f);
+	
 	//キー3
 	next[2][0] = D3DXVECTOR3(0.0f, -0.41f, 0.0f);
 	next[2][1] = D3DXVECTOR3(0.0f, 0.22f, 0.0f);
-	next[2][2] = D3DXVECTOR3(0.0f, -1.56f, 0.0f);
-	next[2][3] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	next[2][4] = D3DXVECTOR3(0.0f, 0.0f, -1.10f);
-	next[2][5] = D3DXVECTOR3(0.0f, 0.66f, 0.0f);
-	next[2][6] = D3DXVECTOR3(0.75f, 0.22f, 0.0f);
-	next[2][7] = D3DXVECTOR3(-0.53f, 0.0f, 0.0f);
-	next[2][8] = D3DXVECTOR3(-0.75f, 0.22f, 0.0f);
-	next[2][9] = D3DXVECTOR3(0.41f, 0.0f, 0.0f);
-
+	next[2][2] = D3DXVECTOR3(0.0f, -1.36f, 0.0f);
+	next[2][3] = D3DXVECTOR3(0.0f, 0.0f, -1.1f);
+	next[2][4] = D3DXVECTOR3(-0.75f, 0.22f, 0.0f);
+	next[2][5] = D3DXVECTOR3(0.75f, 0.22f, 0.0f);
+	
 	for (int nCntNeut = 0; nCntNeut < MAX_MODEL_PLAYER; nCntNeut++)
 	{
 		diff[nCntNeut] = next[nNextKey][nCntNeut] - g_Player.aModel[nCntNeut].rot;
-		if (nNextKey == 0)
-		{
-			g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + diff[nCntNeut] / 10;
-		}
-		else if (nNextKey == 1)
-		{
-			g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + diff[nCntNeut] / 20;
-		}
-		else if (nNextKey == 2)
-		{
-			g_Player.aModel[nCntNeut].rot = g_Player.aModel[nCntNeut].rot + diff[nCntNeut] / 4;
-		}
+		g_Player.aModel[nCntNeut].rot += (diff[nCntNeut] / (float)nFrame);
 	}
-	nFrame++;
+	nFrame--;
 
-	if (nNextKey == 0)
+	if (nFrame == 0)
 	{
-		if (nFrame > 15)
-		{
-			nNextKey++;
-			nFrame = 0;
-		}
-	}
-	else if (nNextKey == 1)
-	{
-		if (nFrame > 8)
-		{
-			nNextKey++;
-			nFrame = 0;
-		}
-	}
-	else if (nNextKey == 2)
-	{
-		if (nFrame > 4)
+		if (nNextKey == ACTION_KEY - 1)
 		{
 			g_Player.nowMotion = MOTION_NEUTRAL;
 			nNextKey = 0;
-			nFrame = 0;
 		}
+		else
+		{
+			nNextKey++;
+		}
+		nFrame = 12;
 	}
 }
 

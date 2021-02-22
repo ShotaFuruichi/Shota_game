@@ -46,7 +46,6 @@ void UpdateEnemy(void);
 void DrawEnemy(void);
 
 void AttackEnemy(void);
-void StateEnemy(void);
 
 void MotionEnemy(void);
 void MotionEnemyNeutral(void);

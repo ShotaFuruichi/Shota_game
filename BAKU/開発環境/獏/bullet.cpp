@@ -6,7 +6,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 #include "bullet.h"
-#include "wall.h"
+#include "player.h"
+#include "enemy.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -109,28 +110,32 @@ void UninitBullet(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UpdateBullet(void)
 {
-	WALL *wall = GetWall();
-	VERTEX_3D WallVtx = *GetVtx();
+	ENEMY *enemy = GetEnemy();
+	static int nBullet = 90;
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		if (g_aBullet[nCntBullet].bUse == true)
 		{
+			float fDisX = enemy->pos.x - g_aBullet[nCntBullet].pos.x;
+			float fDisZ = enemy->pos.z - g_aBullet[nCntBullet].pos.z;
+			int nAttack = GetRandom(MAGIC_DAMAGE, MAGIC_DAMAGE + 500);	//ダメージ量
+
 			// 位置更新
-			g_aBullet[nCntBullet].pos.x += g_aBullet[nCntBullet].move.x;
-			g_aBullet[nCntBullet].pos.z += g_aBullet[nCntBullet].move.z;
+			g_aBullet[nCntBullet].pos.x += fDisX / nBullet;
+			g_aBullet[nCntBullet].pos.z += fDisZ / nBullet;
 
-			//寿命減少
-			g_aBullet[nCntBullet].nLife--;
+			nBullet--;
 
-			if (g_aBullet[nCntBullet].nLife == 0)
+			if (nBullet < 0)
 			{
+				if (enemy->nLife - nAttack < 0)
+				{	//攻撃が敵の残りHPを超えたとき0までのダメージに変換
+					nAttack = enemy->nLife;
+				}
+				enemy->nLife -= nAttack;
 				g_aBullet[nCntBullet].bUse = false;
-			}
-
-			if (g_aBullet[nCntBullet].pos.z > wall->pos.z)
-			{
-				//g_aBullet[nCntBullet].move.z = (2 * (((wall->pos.x - g_aBullet[nCntBullet].pos.x) * (WallVtx.nor.x)) + ((wall->pos.z - g_aBullet[nCntBullet].pos.z) * (WallVtx.nor.z))));
+				nBullet = 90;
 			}
 		}
 	}
@@ -223,15 +228,13 @@ void DrawBullet(void)
 ////////////////////////////////////////////////////////////////////////////////
 //セット処理
 ////////////////////////////////////////////////////////////////////////////////
-void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nLife)
+void SetBullet(D3DXVECTOR3 pos)
 {
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		if (g_aBullet[nCntBullet].bUse == false)
 		{
 			g_aBullet[nCntBullet].pos = pos;
-			g_aBullet[nCntBullet].move = move;
-			g_aBullet[nCntBullet].nLife = nLife;
 			g_aBullet[nCntBullet].bUse = true;
 			break;
 		}
