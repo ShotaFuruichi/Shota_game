@@ -19,9 +19,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define PMOVE_SPEED (5.0f)				//プレイヤーの移動速度
 #define MAX_INVI (4)					//透明な壁の枚数
-#define EX_INVI (1000)					//透明な壁の大きさ
-#define PLAYER_APPEARX (EX_INVI - 30)	//プレイヤーの出現位置X座標
-#define PLAYER_APPEARZ (-EX_INVI + 30)	//プレイヤーの出現位置Y座標
+#define EX_INVI (1500)					//透明な壁の大きさ
+#define PLAYER_APPEARX (0)				//プレイヤーの出現位置X座標
+#define PLAYER_APPEARZ (-EX_INVI + 30)	//プレイヤーの出現位置Z座標
 #define MP_COUNT (SEC_ONE * 15)			//mp回復の間隔
 #define MP_RECOVERY (1000)				//mpの回復量
 #define ATTACK_REACH (500.0f)			//物理攻撃が届く距離
