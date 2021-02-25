@@ -9,6 +9,7 @@
 #include "EnemyAttack.h"
 #include "fade.h"
 #include "player.h"
+#include "result.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -65,6 +66,7 @@ void InitEnemy(void)
 	g_Enemy.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							//プレイヤーの向きの初期設定
 	g_Enemy.rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						//プレイヤーの目標の向きの初期設定
 	g_Enemy.nowMotion = MOTION_NEUTRAL;										//現在のモーション
+	g_Enemy.nAttackCounter = 0;												//攻撃の間隔
 	g_Enemy.nLife = LIFE_ENEMY;												//敵の体力
 }
 
@@ -212,10 +214,9 @@ void DrawEnemy(void)
 ////////////////////////////////////////////////////////////////////////////////
 void AttackEnemy(void)
 {
-	g_Enemy.AttackCounter++;
-	if (g_Enemy.AttackCounter % ATTACK_INTERVAL == 0)
+	g_Enemy.nAttackCounter++;
+	if (g_Enemy.nAttackCounter % ATTACK_INTERVAL == 0)
 	{
-
 		for (int nAttack = 0; nAttack < 4; nAttack++)
 		{
 			SetEnemyAttack();

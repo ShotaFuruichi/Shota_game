@@ -13,6 +13,9 @@
 #include "object.h"
 #include "fade.h"
 #include "enemy.h"
+#include "result.h"
+#include "circle.h"
+#include "effect.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -253,6 +256,7 @@ void SkillPlayer(void)
 	//変数定義
 	XinputGamepad *pXinput = GetXinputGamepad();
 	ENEMY *enemy = GetEnemy();
+	static int nCntEff = 0;
 
 	if (g_Player.nCooldown > 0)
 	{	//クールダウン
@@ -293,6 +297,7 @@ void SkillPlayer(void)
 				g_Player.skill = SKILL_MAGICBALL;
 				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
+				SetCircle(SKILL_MAGICBALL);
 			}
 		}
 
@@ -303,6 +308,7 @@ void SkillPlayer(void)
 				g_Player.skill = SKILL_HEAL;
 				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
+				SetCircle(SKILL_HEAL);
 			}
 		}
 	}
@@ -339,7 +345,7 @@ void SkillPlayer(void)
 
 		if (g_Player.nChantCounter == 0)
 		{	//詠唱終了時に回復、クールダウンを設定
-			SetBullet(D3DXVECTOR3(g_Player.pos.x, g_Player.pos.y + 70, g_Player.pos.z));
+			SetBullet(D3DXVECTOR3(g_Player.pos.x + sinf(g_Player.rot.y) * -100, g_Player.pos.y + 70, g_Player.pos.z + cosf(g_Player.rot.y) * -100));
 			g_Player.skill = SKILL_NONE;
 			g_Player.bChant = false;
 			g_Player.nMP -= MAGIC_MP;
@@ -370,7 +376,14 @@ void SkillPlayer(void)
 			g_Player.skill = SKILL_NONE;
 			g_Player.bChant = false;
 			g_Player.nMP -= HEAL_MP;
+			nCntEff = 30;
 		}
+	}
+
+	if (nCntEff > 0)
+	{
+		SetEffect(D3DXVECTOR3(g_Player.pos.x, g_Player.pos.y + 50, g_Player.pos.z), D3DXCOLOR(0.0f, 1.f, 0.6f, 0.2f));
+		nCntEff--;
 	}
 		
 	if (g_Player.bChant == true)
@@ -380,6 +393,7 @@ void SkillPlayer(void)
 			g_Player.skill = SKILL_NONE;
 			g_Player.nCooldown = 0;
 			g_Player.bChant = false;
+
 		}
 	}
 }
@@ -391,6 +405,7 @@ void MovePlayer(void)
 {
 	CAMERA *camera = GetCamera();
 	XinputGamepad *pXinput = GetXinputGamepad();
+	ENEMY *enemy = GetEnemy();
 
 	//位置を保存
 	g_Player.posOld = g_Player.pos;
@@ -413,6 +428,14 @@ void MovePlayer(void)
 	else if (g_Player.rot.y > D3DX_PI)
 	{// 3.14fより大きくなったとき値を-3.14fにする
 		g_Player.rot.y -= D3DX_PI * 2.0f;
+	}
+
+	D3DXVECTOR3 vector = enemy->pos - g_Player.pos;
+	float fAngle = atan2f(vector.x, vector.z);
+
+	if(g_Player.bChant == true)
+	{
+		g_Player.rotDest.y = D3DX_PI + fAngle;
 	}
 
 	//移動
@@ -580,6 +603,7 @@ void MovePlayer(void)
 		}
 	}
 
+	//重力加算
 	g_Player.fGravity -= 1.0f;
 	g_Player.pos.y += g_Player.fGravity;
 
@@ -605,16 +629,16 @@ void MotionPlayer(void)
 {
 	switch(g_Player.nowMotion)
 	{
-	case MOTION_NEUTRAL:
+	case MOTION_NEUTRAL:	//ニュートラル
 		MotionPlayerNeutral();
 		break;
-	case MOTION_MOVE:
+	case MOTION_MOVE:		//移動
 		MotionPlayerMove();
 		break;
-	case MOTION_JUMP:
+	case MOTION_JUMP:		//ジャンプ
 		MotionPlayerJump();
 		break;
-	case MOTION_ACTION:
+	case MOTION_ACTION:		//アクション
 		MotionPlayerAction();
 		break;
 	}
@@ -703,32 +727,32 @@ void MotionPlayerMove(void)
 	next[0][1] = D3DXVECTOR3(0.22f, 0.09f, 0.0f);
 	next[0][2] = D3DXVECTOR3(2.1f, 0.0f, 1.31f);
 	next[0][3] = D3DXVECTOR3(-1.07f, 0.0f, -1.32f);
-	next[0][4] = D3DXVECTOR3(-2.02f, 0.0f, 0.0f);
-	next[0][5] = D3DXVECTOR3(1.5f, 0.0f, 0.0f);
+	next[0][4] = D3DXVECTOR3(-2.02f, 0.0f, 0.1f);
+	next[0][5] = D3DXVECTOR3(1.5f, 0.0f, -0.1f);
 
 	//キー2
 	next[1][0] = D3DXVECTOR3(-0.4f, 0.0f, 0.0f);
 	next[1][1] = D3DXVECTOR3(0.31f, 0.0f, 0.0f);
 	next[1][2] = D3DXVECTOR3(2.01f, 0.0f, 1.32f);
 	next[1][3] = D3DXVECTOR3(-0.75f, 0.0f, -1.32f);
-	next[1][4] = D3DXVECTOR3(-1.33f, 0.0f, 0.0f);
-	next[1][5] = D3DXVECTOR3(0.83f, 0.0f, 0.0f);
+	next[1][4] = D3DXVECTOR3(-1.33f, 0.0f, 0.1f);
+	next[1][5] = D3DXVECTOR3(0.83f, 0.0f, -0.1f);
 
 	//キー3
 	next[2][0] = D3DXVECTOR3(-0.3f, 0.15f, 0.0f);
 	next[2][1] = D3DXVECTOR3(0.22f, -0.1f, 0.0f);
 	next[2][2] = D3DXVECTOR3(-1.07f, 0.0f, 1.32f);
 	next[2][3] = D3DXVECTOR3(2.1f, 0.0f, -1.32f);
-	next[2][4] = D3DXVECTOR3(2.23f, 0.0f, 0.0f);
-	next[2][5] = D3DXVECTOR3(-1.5f, 0.0f, 0.0f);
+	next[2][4] = D3DXVECTOR3(2.23f, 0.0f, 0.1f);
+	next[2][5] = D3DXVECTOR3(-1.5f, 0.0f, -0.1f);
 
 	//キー4
 	next[3][0] = D3DXVECTOR3(-0.4f, 0.0f, 0.0f);
 	next[3][1] = D3DXVECTOR3(0.31f, 0.0f, 0.0f);
 	next[3][2] = D3DXVECTOR3(-0.75f, 0.0f, 1.32f);
 	next[3][3] = D3DXVECTOR3(2.01f, 0.0f, -1.32f);
-	next[3][4] = D3DXVECTOR3(1.33f, 0.0f, 0.0f);
-	next[3][5] = D3DXVECTOR3(-0.83f, 0.0f, 0.0f);
+	next[3][4] = D3DXVECTOR3(1.33f, 0.0f, 0.1f);
+	next[3][5] = D3DXVECTOR3(-0.83f, 0.0f, -0.1f);
 
 	for (int nCntNeut = 0; nCntNeut < MAX_MODEL_PLAYER; nCntNeut++)
 	{

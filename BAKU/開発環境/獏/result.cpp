@@ -9,12 +9,15 @@
 #include "input.h"
 #include "fade.h"
 #include "xinput_pad.h"
+#include "player.h"
+#include "enemy.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
 ////////////////////////////////////////////////////////////////////////////////
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffResult = NULL;	//頂点情報
-LPDIRECT3DTEXTURE9 g_pTextureResult[3] = {};			//テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffResult = NULL;			//頂点情報
+LPDIRECT3DTEXTURE9 g_pTextureResult[RESULT_MAX] = {};		//テクスチャへのポインタ
+RESULT g_Result;											//どのリザルトを描画するか
 
 ////////////////////////////////////////////////////////////////////////////////
 //初期化処理
@@ -28,16 +31,9 @@ HRESULT InitResult(void)
 	//デバイスの取得
 	pDevice = GetDevice();
 
-	//変数の初期化
-	g_pVtxBuffResult = NULL;
-	g_pTextureResult[0] = NULL;
-	g_pTextureResult[1] = NULL;
-	g_pTextureResult[2] = NULL;
-
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\gameover000.jpg", &g_pTextureResult[0]);
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\gameclear.jpg", &g_pTextureResult[1]);
-	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\gameclear2.jpg", &g_pTextureResult[2]);
+	D3DXCreateTextureFromFile(pDevice, "data\\TEXTURE\\clear.jpg", &g_pTextureResult[1]);
 
 	//頂点バッファの生成
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &g_pVtxBuffResult, NULL)))
@@ -89,6 +85,16 @@ void UninitResult(void)
 		g_pVtxBuffResult->Release();	//開放
 		g_pVtxBuffResult = NULL;		//初期化
 	}
+
+	//テクスチャの開放
+	for (int nCntResult = 0; nCntResult < RESULT_MAX; nCntResult++)
+	{
+		if (g_pTextureResult[nCntResult] != NULL)
+		{
+			g_pTextureResult[nCntResult]->Release();
+			g_pTextureResult[nCntResult] = NULL;
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,6 +117,8 @@ void DrawResult(void)
 {
 	//変数宣言
 	LPDIRECT3DDEVICE9 pDevice;
+	PLAYER *player = GetPlayer();
+	ENEMY *enemy = GetEnemy();
 
 	//デバイスの取得
 	pDevice = GetDevice();
@@ -122,7 +130,14 @@ void DrawResult(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, g_pTextureResult[0]);
+	if (player->nLife <= 0)
+	{
+		pDevice->SetTexture(0, g_pTextureResult[0]);
+	}
+	else if (enemy->nLife <= 0)
+	{
+		pDevice->SetTexture(0, g_pTextureResult[1]);
+	}
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);

@@ -10,7 +10,6 @@
 #include "polygon.h"
 #include "camera.h"
 #include "light.h"
-#include "model.h"
 #include "input.h"
 #include "shadow.h"
 #include "wall.h"

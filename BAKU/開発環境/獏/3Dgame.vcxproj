@@ -155,6 +155,8 @@
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="circle.cpp" />
+    <ClCompile Include="effect.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="EnemyAttack.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -163,7 +165,6 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshfield.cpp" />
-    <ClCompile Include="model.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Polygon.cpp" />
@@ -180,6 +181,8 @@
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="circle.h" />
+    <ClInclude Include="effect.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="EnemyAttack.h" />
     <ClInclude Include="fade.h" />
@@ -188,7 +191,6 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="meshfield.h" />
-    <ClInclude Include="model.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="polygon.h" />

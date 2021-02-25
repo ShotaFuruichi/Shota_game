@@ -8,12 +8,13 @@
 #include "bullet.h"
 #include "player.h"
 #include "enemy.h"
+#include "effect.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
 #define MAX_BULLET (256)	//弾の最大数
-#define BULLET_SIZE (20.0f)	//弾の大きさ
+#define BULLET_SIZE (0.0f)	//弾の大きさ
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -71,7 +72,7 @@ HRESULT InitBullet(void)
 		pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 		pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-		//頂点情報の設定
+		//テクスチャ座標の設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 1.0f);
 		pVtx[1].tex = D3DXVECTOR2(0.0f, 0.0f);
 		pVtx[2].tex = D3DXVECTOR2(1.0f, 1.0f);
@@ -111,12 +112,18 @@ void UninitBullet(void)
 void UpdateBullet(void)
 {
 	ENEMY *enemy = GetEnemy();
-	static int nBullet = 90;
+	static int nBullet = 60;
 
 	for (int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
 		if (g_aBullet[nCntBullet].bUse == true)
 		{
+			
+			for (int nCntEffect = 0; nCntEffect < 2; nCntEffect++)
+			{
+				SetEffect(g_aBullet[nCntBullet].pos, D3DXCOLOR(1.0f, 0.3f, 0.0f, 1.0f));
+			}
+
 			float fDisX = enemy->pos.x - g_aBullet[nCntBullet].pos.x;
 			float fDisZ = enemy->pos.z - g_aBullet[nCntBullet].pos.z;
 			int nAttack = GetRandom(MAGIC_DAMAGE, MAGIC_DAMAGE + 500);	//ダメージ量
@@ -256,10 +263,10 @@ void SetVertexBullet(int nIdx)
 	pVtx += nIdx * 4;
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x - BULLET_SIZE, g_aBullet[nIdx].pos.z - BULLET_SIZE, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x - BULLET_SIZE, g_aBullet[nIdx].pos.z + BULLET_SIZE, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x + BULLET_SIZE, g_aBullet[nIdx].pos.z - BULLET_SIZE, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x + BULLET_SIZE, g_aBullet[nIdx].pos.z + BULLET_SIZE, 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x - BULLET_SIZE, g_aBullet[nIdx].pos.y - BULLET_SIZE, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x - BULLET_SIZE, g_aBullet[nIdx].pos.y + BULLET_SIZE, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x + BULLET_SIZE, g_aBullet[nIdx].pos.y - BULLET_SIZE, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(g_aBullet[nIdx].pos.x + BULLET_SIZE, g_aBullet[nIdx].pos.y + BULLET_SIZE, 0.0f);
 
 	//頂点バッファをアンロックする
 	g_pVtxBuffBullet->Unlock();

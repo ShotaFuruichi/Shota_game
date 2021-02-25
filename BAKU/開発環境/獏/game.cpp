@@ -14,7 +14,6 @@
 #include "meshfield.h"
 #include "player.h"
 #include "fade.h"
-#include "model.h"
 #include "object.h"
 #include "polygon.h"
 #include "shadow.h"
@@ -23,6 +22,8 @@
 #include "enemy.h"
 #include "EnemyAttack.h"
 #include "UI.h"
+#include "effect.h"
+#include "circle.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -57,9 +58,6 @@ HRESULT InitGame(void)
 	//オブジェクトの初期化
 	InitObject();
 
-	//モデルの初期化
-	InitModel();
-
 	//プレイヤーの初期化
 	InitPlayer();
 
@@ -68,6 +66,12 @@ HRESULT InitGame(void)
 
 	//敵の攻撃の初期化
 	InitEnemyAttack();
+
+	//魔法陣の初期化
+	InitCircle();
+
+	//エフェクトの初期化
+	InitEffect();
 
 	//UIの初期化
 	InitUI();
@@ -83,6 +87,12 @@ void UninitGame(void)
 	//UIの終了
 	UninitUI();
 
+	//エフェクトの終了
+	UninitEffect();
+
+	//魔法陣の終了
+	UninitCircle();
+
 	//敵の攻撃の終了
 	UninitEnemyAttack();
 
@@ -91,9 +101,6 @@ void UninitGame(void)
 
 	//プレイヤーの終了
 	UninitPlayer();
-
-	//モデルの終了
-	UninitModel();
 
 	//オブジェクトの終了
 	UninitObject();
@@ -149,9 +156,6 @@ void UpdateGame(void)
 	//オブジェクトの更新
 	UpdateObject();
 
-	//モデルの更新
-	UpdateModel();
-
 	//プレイヤーの更新
 	UpdatePlayer();
 
@@ -160,6 +164,12 @@ void UpdateGame(void)
 
 	//敵の攻撃の更新
 	UpdateEnemyAttack();
+
+	//魔法陣の更新
+	UpdateCircle();
+
+	//エフェクトの更新
+	UpdateEffect();
 
 	//UIの更新
 	UpdateUI();
@@ -193,9 +203,6 @@ void DrawGame(void)
 	//オブジェクトの描画
 	DrawObject();
 
-	//モデルの描画
-	DrawModel();
-
 	//プレイヤーの描画
 	DrawPlayer();
 
@@ -204,6 +211,12 @@ void DrawGame(void)
 
 	//敵の攻撃の描画
 	DrawEnemyAttack();
+
+	//魔法陣の更新
+	DrawCircle();
+
+	//エフェクトの描画
+	DrawEffect();
 
 	//UIの描画
 	DrawUI();

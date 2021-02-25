@@ -25,11 +25,29 @@
     <Filter Include="ソース ファイル\ゲームシーン\プレイヤー">
       <UniqueIdentifier>{d785db03-fd02-4850-a8ae-488bc9e79d83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーンまとめ">
-      <UniqueIdentifier>{4e28a2a8-5734-45d7-8193-f8dbf432942f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\その他">
       <UniqueIdentifier>{234f3275-1b1e-4999-91b4-56d76ee37379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\入力">
+      <UniqueIdentifier>{b4225255-cb26-4510-b397-6bcf46a5058c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\その他">
+      <UniqueIdentifier>{4b3207a5-ca6c-46a6-a00c-129f0fe2c42e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン">
+      <UniqueIdentifier>{92d41483-9409-49d8-82f7-ef432234518d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン">
+      <UniqueIdentifier>{4e28a2a8-5734-45d7-8193-f8dbf432942f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ゲームシーン">
+      <UniqueIdentifier>{e3a0960f-7465-4e46-9bdf-968ed8bd3a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ゲームシーン\プレイヤー">
+      <UniqueIdentifier>{01933b0c-9327-4ca5-a9e6-66a4add7da5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ゲームシーン\敵">
+      <UniqueIdentifier>{18ce5512-f20a-4f4d-86db-dcc7c9fdbcc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,9 +81,6 @@
     <ClCompile Include="object.cpp">
       <Filter>ソース ファイル\ゲームシーン</Filter>
     </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>ソース ファイル\ゲームシーン</Filter>
-    </ClCompile>
     <ClCompile Include="meshfield.cpp">
       <Filter>ソース ファイル\ゲームシーン</Filter>
     </ClCompile>
@@ -73,19 +88,19 @@
       <Filter>ソース ファイル\ゲームシーン</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル\シーンまとめ</Filter>
+      <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
-      <Filter>ソース ファイル\シーンまとめ</Filter>
+      <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
     <ClCompile Include="tutorial.cpp">
-      <Filter>ソース ファイル\シーンまとめ</Filter>
+      <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
     <ClCompile Include="result.cpp">
-      <Filter>ソース ファイル\シーンまとめ</Filter>
+      <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
     <ClCompile Include="ranking.cpp">
-      <Filter>ソース ファイル\シーンまとめ</Filter>
+      <Filter>ソース ファイル\シーン</Filter>
     </ClCompile>
     <ClCompile Include="Polygon.cpp">
       <Filter>ソース ファイル\入力</Filter>
@@ -102,76 +117,85 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\その他</Filter>
     </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>ソース ファイル\ゲームシーン\プレイヤー</Filter>
+    </ClCompile>
+    <ClCompile Include="circle.cpp">
+      <Filter>ソース ファイル\ゲームシーン\プレイヤー</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="polygon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="wall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Billboard.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="meshfield.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="player.h">
+      <Filter>ヘッダー ファイル\ゲームシーン\プレイヤー</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="tutorial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="result.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ranking.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="xinput_pad.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\ゲームシーン\プレイヤー</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\ゲームシーン\敵</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\ゲームシーン\敵</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="meshfield.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダー ファイル\入力</Filter>
+    </ClInclude>
+    <ClInclude Include="xinput_pad.h">
+      <Filter>ヘッダー ファイル\入力</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダー ファイル\その他</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダー ファイル\その他</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダー ファイル\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>ヘッダー ファイル\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="result.h">
+      <Filter>ヘッダー ファイル\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ヘッダー ファイル\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.h">
+      <Filter>ヘッダー ファイル\シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>ヘッダー ファイル\ゲームシーン\プレイヤー</Filter>
+    </ClInclude>
+    <ClInclude Include="circle.h">
+      <Filter>ヘッダー ファイル\ゲームシーン\プレイヤー</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

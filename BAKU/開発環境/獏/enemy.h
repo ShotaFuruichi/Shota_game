@@ -18,7 +18,7 @@
 #define ENEMY_APPEARY (10)
 #define ENEMY_APPEARZ (0)
 #define ATTACK_INTERVAL (300)
-#define LIFE_ENEMY (50000)
+#define LIFE_ENEMY (30000)
 
 ////////////////////////////////////////////////////////////////////////////////
 //敵の構造体
@@ -33,7 +33,7 @@ typedef struct
 	MOTION nowMotion;				//現在のモーション
 	MODEL aModel[MAX_MODEL_ENEMY];	//モデル(パーツ)
 	int nNumModel;					//モデル(パーツ)数
-	int AttackCounter;				//攻撃間隔
+	int nAttackCounter;				//攻撃間隔
 	int nLife;						//体力
 } ENEMY;
 

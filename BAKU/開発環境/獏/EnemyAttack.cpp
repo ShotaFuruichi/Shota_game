@@ -15,9 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //ƒ}ƒNƒ’è‹`
 ////////////////////////////////////////////////////////////////////////////////
-#define MAX_ENEMYATTACK (64)	//UŒ‚‚ÌÅ‘å”
-#define ATTACK_TIME (120)		//‰~‚ªŒ»‚ê‚Ä‚©‚çUŒ‚‚ªs‚í‚ê‚é‚Ü‚Å‚Ì’·‚³
-#define ATTACK_SIZE (450)		//‰~‚Ì‘å‚«‚³
+#define MAX_ENEMYATTACK (64)		//UŒ‚‚ÌÅ‘å”
+#define ATTACK_TIME (120)			//‰~‚ªŒ»‚ê‚Ä‚©‚çUŒ‚‚ªs‚í‚ê‚é‚Ü‚Å‚Ì’·‚³
+#define ATTACK_SIZE (450)			//‰~‚Ì‘å‚«‚³
+#define ENEMYATTACK_DAMAGE (1500)	//“G‚ÌUŒ‚—Í
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +139,7 @@ void UpdateEnemyAttack(void)
 			{
 				if (fDis[nCntAttack] <= fSize)
 				{
-					player->nLife -= 1000;
+					player->nLife -= ENEMYATTACK_DAMAGE;
 				}
 				g_aEnemyAttack[nCntAttack].bUse = false;
 			}
