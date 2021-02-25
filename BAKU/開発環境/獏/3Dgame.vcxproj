@@ -161,6 +161,7 @@
     <ClCompile Include="EnemyAttack.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="EnemyAttack.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="HitEffect.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />

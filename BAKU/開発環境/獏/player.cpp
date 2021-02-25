@@ -22,7 +22,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define PMOVE_SPEED (5.0f)				//プレイヤーの移動速度
 #define MAX_INVI (4)					//透明な壁の枚数
-#define EX_INVI (1500)					//透明な壁の大きさ
+#define EX_INVI (2000)					//透明な壁の大きさ
 #define PLAYER_APPEARX (0)				//プレイヤーの出現位置X座標
 #define PLAYER_APPEARZ (-EX_INVI + 30)	//プレイヤーの出現位置Z座標
 #define MP_COUNT (SEC_ONE * 15)			//mp回復の間隔
@@ -283,6 +283,7 @@ void SkillPlayer(void)
 			fDisX = powf(fDisX, 2.0f);
 			fDisZ = powf(fDisZ, 2.0f);
 			fDis = fDisX + fDisZ;
+			
 			if (fDis < fReach)
 			{
 				g_Player.skill = SKILL_ATTACK;
@@ -433,7 +434,7 @@ void MovePlayer(void)
 	D3DXVECTOR3 vector = enemy->pos - g_Player.pos;
 	float fAngle = atan2f(vector.x, vector.z);
 
-	if(g_Player.bChant == true)
+	if(g_Player.skill == SKILL_MAGICBALL)
 	{
 		g_Player.rotDest.y = D3DX_PI + fAngle;
 	}

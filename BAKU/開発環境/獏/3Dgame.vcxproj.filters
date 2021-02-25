@@ -123,6 +123,9 @@
     <ClCompile Include="circle.cpp">
       <Filter>ソース ファイル\ゲームシーン\プレイヤー</Filter>
     </ClCompile>
+    <ClCompile Include="HitEffect.cpp">
+      <Filter>ソース ファイル\ゲームシーン</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="circle.h">
       <Filter>ヘッダー ファイル\ゲームシーン\プレイヤー</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEffect.h">
+      <Filter>ヘッダー ファイル\ゲームシーン</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

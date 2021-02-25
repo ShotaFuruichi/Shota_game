@@ -12,7 +12,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffShadow = NULL;	//頂点情報
 LPDIRECT3DTEXTURE9 g_pTextureShadow = NULL;			//テクスチャ情報
-
 D3DXVECTOR3 g_posShadow;							//位置
 D3DXVECTOR3 g_rotShadow;							//向き
 D3DXMATRIX g_mtxWorldShadow;						//ワールドマトリックス

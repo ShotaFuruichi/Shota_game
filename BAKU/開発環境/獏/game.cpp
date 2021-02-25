@@ -24,6 +24,7 @@
 #include "UI.h"
 #include "effect.h"
 #include "circle.h"
+#include "HitEffect.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -73,6 +74,9 @@ HRESULT InitGame(void)
 	//エフェクトの初期化
 	InitEffect();
 
+	//ヒットエフェクトの初期化
+	InitHitEffect();
+
 	//UIの初期化
 	InitUI();
 
@@ -86,6 +90,9 @@ void UninitGame(void)
 {
 	//UIの終了
 	UninitUI();
+
+	//ヒットエフェクトの終了
+	UninitHitEffect();
 
 	//エフェクトの終了
 	UninitEffect();
@@ -171,6 +178,9 @@ void UpdateGame(void)
 	//エフェクトの更新
 	UpdateEffect();
 
+	//ヒットエフェクトの更新
+	UpdateHitEffect();
+
 	//UIの更新
 	UpdateUI();
 
@@ -217,6 +227,9 @@ void DrawGame(void)
 
 	//エフェクトの描画
 	DrawEffect();
+
+	//ヒットエフェクトの描画
+	DrawHitEffect();
 
 	//UIの描画
 	DrawUI();

@@ -112,11 +112,12 @@ void UpdateEffect(void)
 
 	for (int nCntEffect = 0; nCntEffect < MAX_EFFECT; nCntEffect++, pEffect++)
 	{
-		//色の設定
-		SetColorEffect(nCntEffect);
-
 		if (pEffect->bUse == true)
 		{	//エフェクトが使用されているとき
+
+			//色の設定
+			SetColorEffect(nCntEffect);
+
 
 			//α値減少
 			if (pEffect->col.a > 0)

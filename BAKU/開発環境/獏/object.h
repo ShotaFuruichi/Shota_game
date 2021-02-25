@@ -10,18 +10,20 @@
 #include "main.h"
 
 ////////////////////////////////////////////////////////////////////////////////
+//マクロ定義
+////////////////////////////////////////////////////////////////////////////////
+#define MAX_OBJECT (256)
+
+////////////////////////////////////////////////////////////////////////////////
 //オブジェクトの構造体
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-	DWORD nNumMat;							//マテリアルの数
 	D3DXVECTOR3 pos;						//位置
 	D3DXVECTOR3 rot;						//向き
 	D3DXMATRIX mtxWorld;					//ワールドマトリックス
-	D3DXVECTOR3 vtxMin, vtxMax;				//モデルの最小値、最大値
-	LPD3DXMESH  pMesh;						//メッシュ(頂点情報)へのポインタ
-	LPD3DXBUFFER pBuffMat;					//マテリアル(材質情報)へのポインタ
-	LPDIRECT3DTEXTURE9 pTexture[256] = {};	//テクスチャへのポインタ
+	bool bUse;								//使用状況
+	int nCount;								//消えるまでのカウント
 } OBJECT;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +34,7 @@ void UninitObject(void);
 void UpdateObject(void);
 void DrawObject(void);
 
+void SetObject(D3DXVECTOR3 pos);
 bool CollisionObject(D3DXVECTOR3 pos, D3DXVECTOR3 oldpos);
 
 #endif

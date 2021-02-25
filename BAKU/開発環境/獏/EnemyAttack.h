@@ -39,6 +39,10 @@ void UninitEnemyAttack(void);
 void UpdateEnemyAttack(void);
 void DrawEnemyAttack(void);
 void SetEnemyAttack(void);
+void SetEnemyAttack2(void);
+void EnemyAttack(void);
+void EnemyAttack2(void);
 void SetVertexAttack(int nIdx);
+void SetVertexAttack2(int nIdx);
 
 #endif

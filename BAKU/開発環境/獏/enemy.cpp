@@ -65,9 +65,10 @@ void InitEnemy(void)
 	g_Enemy.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							//プレイヤーの前回更新時の位置の初期設定
 	g_Enemy.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							//プレイヤーの向きの初期設定
 	g_Enemy.rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						//プレイヤーの目標の向きの初期設定
-	g_Enemy.nowMotion = MOTION_NEUTRAL;										//現在のモーション
 	g_Enemy.nAttackCounter = 0;												//攻撃の間隔
 	g_Enemy.nLife = LIFE_ENEMY;												//敵の体力
+	g_Enemy.nowMotion = ENEMYMOTION_MAX;									//現在のモーション
+	g_Enemy.bDrop = false;													//落ちるか	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,11 +99,6 @@ void UpdateEnemy(void)
 {
 	PLAYER *player = GetPlayer();
 
-	if (g_Enemy.nowMotion != MOTION_JUMP && g_Enemy.nowMotion != MOTION_ACTION)
-	{
-		g_Enemy.nowMotion = MOTION_NEUTRAL;
-	}
-
 	if (g_Enemy.nLife <= 0)
 	{
 		SetFade(FADE_OUT, MODE_RESULT);
@@ -122,13 +118,16 @@ void UpdateEnemy(void)
 	D3DXVECTOR3 vector = player->pos - g_Enemy.pos;
 	float fAngle = atan2f(vector.x, vector.z);
 
-	g_Enemy.rot.y = fAngle;
+	if (g_Enemy.nowMotion != ENEMYMOTION_DROP)
+	{
+		g_Enemy.rot.y = fAngle;
+	}
 
 	g_Enemy.aModel[1].rot.x -= 0.01f;
 	g_Enemy.aModel[1].rot.y -= 0.01f;
 	g_Enemy.aModel[1].rot.z -= 0.01f;
 
-	//MotionEnemy();
+	MotionEnemy();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -214,12 +213,52 @@ void DrawEnemy(void)
 ////////////////////////////////////////////////////////////////////////////////
 void AttackEnemy(void)
 {
+	int nType = GetRandom(ENEMYATTACKTYPE_1, ENEMYATTACKTYPE_2);
+
 	g_Enemy.nAttackCounter++;
 	if (g_Enemy.nAttackCounter % ATTACK_INTERVAL == 0)
 	{
-		for (int nAttack = 0; nAttack < 4; nAttack++)
+		switch (nType)
 		{
+		case ENEMYATTACKTYPE_1:
 			SetEnemyAttack();
+			break;
+		case ENEMYATTACKTYPE_2:
+			SetEnemyAttack2();
+			g_Enemy.nowMotion = ENEMYMOTION_DROP;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//敵のモーション
+////////////////////////////////////////////////////////////////////////////////
+void MotionEnemy(void)
+{
+	switch (g_Enemy.nowMotion)
+	{
+	case ENEMYMOTION_DROP:
+		if (g_Enemy.bDrop == false)
+		{
+			g_Enemy.rot.y += 0.1f;
+			g_Enemy.pos.y += 5.0f;
+		}
+
+		if (g_Enemy.pos.y > 750)
+		{
+			g_Enemy.bDrop = true;
+		}
+
+		if (g_Enemy.bDrop == true)
+		{
+			g_Enemy.pos.y -= 35.0f;
+
+			if (g_Enemy.pos.y < ENEMY_APPEARY)
+			{
+				g_Enemy.pos.y = ENEMY_APPEARY;
+				g_Enemy.nowMotion = ENEMYMOTION_MAX;
+				g_Enemy.bDrop = false;
+			}
 		}
 	}
 }

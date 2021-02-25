@@ -21,6 +21,15 @@
 #define LIFE_ENEMY (30000)
 
 ////////////////////////////////////////////////////////////////////////////////
+//モーションの列挙型
+////////////////////////////////////////////////////////////////////////////////
+typedef enum
+{
+	ENEMYMOTION_DROP =0,
+	ENEMYMOTION_MAX
+} ENEMYMOTION;
+
+////////////////////////////////////////////////////////////////////////////////
 //敵の構造体
 ////////////////////////////////////////////////////////////////////////////////
 typedef struct
@@ -30,11 +39,12 @@ typedef struct
 	D3DXVECTOR3 rot;				//向き
 	D3DXVECTOR3 rotDest;			//目標の向き
 	D3DXMATRIX mtxWorld;			//ワールドマトリックス
-	MOTION nowMotion;				//現在のモーション
+	ENEMYMOTION nowMotion;				//現在のモーション
 	MODEL aModel[MAX_MODEL_ENEMY];	//モデル(パーツ)
 	int nNumModel;					//モデル(パーツ)数
 	int nAttackCounter;				//攻撃間隔
 	int nLife;						//体力
+	bool bDrop;						//落ちるか
 } ENEMY;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,12 +56,7 @@ void UpdateEnemy(void);
 void DrawEnemy(void);
 
 void AttackEnemy(void);
-
 void MotionEnemy(void);
-void MotionEnemyNeutral(void);
-void MotionEnemyMove(void);
-void MotionEnemyJump(void);
-void MotionEnemyAction(void);
 
 ENEMY *GetEnemy(void);
 

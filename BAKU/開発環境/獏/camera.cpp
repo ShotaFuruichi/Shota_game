@@ -15,8 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define CAMERA_SPEED (3.0f)
 #define ROT_SPEED (0.025f)
-#define MOVE_RANGE (-700.0f)
-#define CAMERA_HEIGHT (350.0f)
+#define MOVE_RANGE (-800.0f)
+#define CAMERA_HEIGHT (450.0f)
 #define CAMERA_DEST (10.0f)
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +121,7 @@ void SetCamera(void)
 	D3DXMatrixIdentity(&g_camera.mtxProjection);
 
 	//プロジェクションマトリックスを作成
-	D3DXMatrixPerspectiveFovLH(&g_camera.mtxProjection, D3DXToRadian(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 10.0f, 3000.0f);
+	D3DXMatrixPerspectiveFovLH(&g_camera.mtxProjection, D3DXToRadian(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 10.0f, 5000.0f);
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &g_camera.mtxProjection);
