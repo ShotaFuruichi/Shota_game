@@ -152,7 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="circle.cpp" />
@@ -172,6 +171,7 @@
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -179,7 +179,6 @@
     <ClCompile Include="xinput_pad.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Billboard.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="circle.h" />
@@ -199,6 +198,7 @@
     <ClInclude Include="ranking.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="tutorial.h" />
     <ClInclude Include="UI.h" />

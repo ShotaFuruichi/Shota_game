@@ -16,6 +16,7 @@
 #include "result.h"
 #include "circle.h"
 #include "effect.h"
+#include "sound.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -299,6 +300,7 @@ void SkillPlayer(void)
 				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
 				SetCircle(SKILL_MAGICBALL);
+				PlaySound(SOUND_LABEL_SE_CHANT);
 			}
 		}
 
@@ -310,6 +312,7 @@ void SkillPlayer(void)
 				g_Player.nCooldown = MAX_COOLDOWN;
 				g_Player.bUseSkill = false;
 				SetCircle(SKILL_HEAL);
+				PlaySound(SOUND_LABEL_SE_CHANT);
 			}
 		}
 	}
@@ -332,6 +335,8 @@ void SkillPlayer(void)
 		g_Player.nCooldown = MAX_COOLDOWN;
 		g_Player.skill = SKILL_NONE;
 		g_Player.bChant = false;
+		enemy->bDamage = true;
+		PlaySound(SOUND_LABEL_SE_HIT);
 	}
 
 	//攻撃魔法
@@ -350,6 +355,7 @@ void SkillPlayer(void)
 			g_Player.skill = SKILL_NONE;
 			g_Player.bChant = false;
 			g_Player.nMP -= MAGIC_MP;
+			PlaySound(SOUND_LABEL_SE_MAGIC);
 		}
 	}
 
@@ -378,6 +384,7 @@ void SkillPlayer(void)
 			g_Player.bChant = false;
 			g_Player.nMP -= HEAL_MP;
 			nCntEff = 30;
+			PlaySound(SOUND_LABEL_SE_HEAL);
 		}
 	}
 
@@ -394,7 +401,6 @@ void SkillPlayer(void)
 			g_Player.skill = SKILL_NONE;
 			g_Player.nCooldown = 0;
 			g_Player.bChant = false;
-
 		}
 	}
 }

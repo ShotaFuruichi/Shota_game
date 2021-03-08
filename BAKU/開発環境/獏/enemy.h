@@ -45,6 +45,7 @@ typedef struct
 	int nAttackCounter;				//UŒ‚ŠÔŠu
 	int nLife;						//‘Ì—Í
 	bool bDrop;						//—‚¿‚é‚©
+	bool bDamage;					//ƒ_ƒ[ƒW
 } ENEMY;
 
 ////////////////////////////////////////////////////////////////////////////////

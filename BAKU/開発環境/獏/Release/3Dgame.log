@@ -1,8 +1,18 @@
-﻿  enemy.cpp
+﻿  EnemyAttack.cpp
+  UI.cpp
+  bullet.cpp
+  camera.cpp
+  circle.cpp
+  enemy.cpp
+  game.cpp
+  main.cpp
+  object.cpp
+  player.cpp
+  result.cpp
   コード生成しています。
-  2 of 216 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+  6 of 219 functions ( 2.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   3Dgame.vcxproj -> C:\Users\student\Documents\Visual Studio 2015\3DGame\獏\Release\3Dgame.exe
   3Dgame.vcxproj -> C:\Users\student\Documents\Visual Studio 2015\3DGame\獏\Release\3Dgame.pdb (Full PDB)

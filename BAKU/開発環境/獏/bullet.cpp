@@ -9,6 +9,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "effect.h"
+#include "sound.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //ƒ}ƒNƒ’è‹`
@@ -143,6 +144,8 @@ void UpdateBullet(void)
 				enemy->nLife -= nAttack;
 				g_aBullet[nCntBullet].bUse = false;
 				nBullet = 90;
+				enemy->bDamage = true;
+				PlaySound(SOUND_LABEL_SE_HIT);
 			}
 		}
 	}

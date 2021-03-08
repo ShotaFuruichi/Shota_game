@@ -28,6 +28,7 @@
 #include "fade.h"
 #include "xinput_pad.h"
 #include "enemy.h"
+#include "sound.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -282,6 +283,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//入力の初期化
 	InitKeyboard(hInstance, hWnd);
 
+	//サウンドの初期化
+	InitSound(hWnd);
+
 	//タイトルの初期化
 	InitTitle();
 
@@ -299,6 +303,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 ////////////////////////////////////////////////////////////////////////////////
 void Uninit(void)
 {	
+	//サウンドの終了
+	UninitSound();
+
 	//入力の終了
 	UninitKeyboard();
 

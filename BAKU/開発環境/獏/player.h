@@ -20,7 +20,7 @@
 #define PLAYER_SIZEXZ (45.0f)					//プレイヤーのサイズXZ軸
 #define PLAYER_SIZEY (80.0f)					//プレイヤーのサイズY軸
 #define LIFE_PLAYER (10000)						//プレイヤーの体力
-#define MP_PLAYER (5000)						//mpの最大値
+#define MP_PLAYER (3000)						//mpの最大値
 #define MAX_COOLDOWN (SEC_ONE * 2)				//クールダウン
 #define CHANT_TIMEMAGIC ((float)SEC_ONE * 1.5f)	//攻撃魔法の詠唱時間
 #define CHANT_TIMEHEAL (SEC_ONE)				//回復魔法の詠唱時間

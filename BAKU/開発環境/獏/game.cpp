@@ -25,6 +25,7 @@
 #include "effect.h"
 #include "circle.h"
 #include "HitEffect.h"
+#include "sound.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -46,9 +47,6 @@ HRESULT InitGame(void)
 
 	//壁の初期化
 	InitWall();
-
-	//ビルボードの初期化
-	InitBillboard();
 
 	//影の初期化
 	InitShadow();
@@ -80,6 +78,9 @@ HRESULT InitGame(void)
 	//UIの初期化
 	InitUI();
 
+	//BGM再生
+	PlaySound(SOUND_LABEL_BGM000);
+
 	return S_OK;
 }
 
@@ -88,6 +89,9 @@ HRESULT InitGame(void)
 ////////////////////////////////////////////////////////////////////////////////
 void UninitGame(void)
 {
+	//再生中の音声を終了
+	StopSound();
+
 	//UIの終了
 	UninitUI();
 
@@ -118,9 +122,6 @@ void UninitGame(void)
 	//影の終了
 	UninitShadow();
 
-	//ビルボードの終了
-	UninitBillboard();
-
 	//壁の終了
 	UninitWall();
 
@@ -150,9 +151,6 @@ void UpdateGame(void)
 
 	//壁の更新
 	UpdateWall();
-
-	//ビルボードの更新
-	UpdateBillboard();
 
 	//影の更新
 	UpdateShadow();
@@ -200,9 +198,6 @@ void DrawGame(void)
 
 	//壁の描画
 	DrawWall();
-
-	//ビルボードの更新
-	DrawBillboard();
 
 	//影の描画
 	DrawShadow();

@@ -11,7 +11,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
 ////////////////////////////////////////////////////////////////////////////////
-#define DELETE_OBJECT (30)
+#define DELETE_OBJECT (120)
 
 ////////////////////////////////////////////////////////////////////////////////
 //グローバル変数
@@ -141,7 +141,7 @@ void UpdateObject(void)
 
 			if (g_aObject[nCntObj].nCount == DELETE_OBJECT)
 			{
-				g_aObject[nCntObj].nCount = 0; 
+				g_aObject[nCntObj].nCount = 0;
 				g_aObject[nCntObj].bUse = false;
 			}
 		}
@@ -185,6 +185,15 @@ void DrawObject(void)
 
 			for (int nCntMat = 0; nCntMat < (int)g_nNumMatObject; nCntMat++)
 			{
+				if (g_aObject[nCntObj].nCount == 0)
+				{
+					pMat[nCntMat].MatD3D.Diffuse.a = 1.0f;
+				}
+				else
+				{
+					pMat[nCntMat].MatD3D.Diffuse.a -= 0.001f;
+				}
+
 				//マテリアルの設定
 				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 

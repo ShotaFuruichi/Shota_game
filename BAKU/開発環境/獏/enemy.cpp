@@ -10,6 +10,7 @@
 #include "fade.h"
 #include "player.h"
 #include "result.h"
+#include "sound.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //マクロ定義
@@ -123,6 +124,17 @@ void UpdateEnemy(void)
 		g_Enemy.rot.y = fAngle;
 	}
 
+	if (g_Enemy.bDamage == true)
+	{
+		static int nCntDamage = 0;
+		nCntDamage++;
+		if (nCntDamage > 30)
+		{
+			nCntDamage = 0;
+			g_Enemy.bDamage = false;;
+		}
+	}
+
 	g_Enemy.aModel[1].rot.x -= 0.01f;
 	g_Enemy.aModel[1].rot.y -= 0.01f;
 	g_Enemy.aModel[1].rot.z -= 0.01f;
@@ -139,8 +151,9 @@ void DrawEnemy(void)
 	D3DXMATRIX mtxRot, mtxTrans;				//計算用マトリックス
 	D3DMATERIAL9 matDef;						//現在のマテリアル保存用
 	D3DXMATERIAL *pMat;							//マテリアルデータへのポインタ
+	D3DXCOLOR col;								//モデルの色保存用
 
-												//プレイヤーのワールドマトリックスの初期化
+	//プレイヤーのワールドマトリックスの初期化
 	D3DXMatrixIdentity(&g_Enemy.mtxWorld);
 
 	//プレイヤーの向きを反映
@@ -162,7 +175,7 @@ void DrawEnemy(void)
 		D3DXMATRIX mtxRotModel, mtxTransModel;	//計算用マトリックス
 		D3DXMATRIX mtxParent;					//親のマトリックス
 
-												//各パーツのワールドマトリックスの初期化
+		//各パーツのワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_Enemy.aModel[nCntModel].mtxWorld);
 
 		//各パーツの向きを反映
@@ -194,8 +207,23 @@ void DrawEnemy(void)
 
 		for (int nCntMat = 0; nCntMat < (int)g_Enemy.aModel[nCntModel].nNumMat; nCntMat++)
 		{
+			if (g_Enemy.bDamage == true)
+			{
+				//マテリアルの拡散光の色を保存
+				col = pMat[nCntMat].MatD3D.Diffuse;
+
+				//マテリアルの拡散光の色を変更
+				pMat[nCntMat].MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+			}
+
 			//マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+
+			if (g_Enemy.bDamage == true)
+			{
+				//マテリアルの拡散光の色を元に戻す
+				pMat[nCntMat].MatD3D.Diffuse = col;
+			}
 
 			//テクスチャの設定
 			pDevice->SetTexture(0, NULL);
@@ -244,7 +272,7 @@ void MotionEnemy(void)
 			g_Enemy.pos.y += 5.0f;
 		}
 
-		if (g_Enemy.pos.y > 750)
+		if (g_Enemy.pos.y > 800)
 		{
 			g_Enemy.bDrop = true;
 		}
