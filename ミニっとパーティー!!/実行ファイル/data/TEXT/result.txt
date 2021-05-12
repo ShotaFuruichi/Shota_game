@@ -1,0 +1,987 @@
+#==============================================================================
+#
+# リザルト画面の情報 [result.txt]
+# Author : Itsuki Takaiwa
+#
+#==============================================================================
+SCRIPT			# この行は絶対消さないこと！
+
+#------------------------------------------------------------------------------
+# テクスチャ数
+#------------------------------------------------------------------------------
+NUM_TEXTURE = 2
+
+#------------------------------------------------------------------------------
+# テクスチャファイル名
+#------------------------------------------------------------------------------
+TEXTURE_FILENAME = data/TEXTURE/field00.jpg			# [0]空テクスチャ
+TEXTURE_FILENAME = data/TEXTURE/bluesky01.png		# [1]山テクスチャ
+TEXTURE_FILENAME = data/TEXTURE/field00.jpg			# [2]地面テクスチャ
+
+#------------------------------------------------------------------------------
+# モデル数
+#------------------------------------------------------------------------------
+NUM_MODEL = 14
+
+#------------------------------------------------------------------------------
+# モデルファイル名
+#------------------------------------------------------------------------------
+MODEL_FILENAME = data/MODEL/step.x					# [0] FootStep //1.5
+MODEL_FILENAME = data/MODEL/bench.x					# [1] bench //0.12
+MODEL_FILENAME = data/MODEL/flower000.x				# [2] flower1 //red 0.15
+MODEL_FILENAME = data/MODEL/flower001.x				# [3] flower2 //white
+MODEL_FILENAME = data/MODEL/flower002.x				# [4] flower3 //yellow
+MODEL_FILENAME = data/MODEL/stage.x					# [5] stage //0.155
+MODEL_FILENAME = data/MODEL/Hill.x					# [6] Hill //0.5
+MODEL_FILENAME = data/MODEL/Stone.x					# [7] Stone //0.2
+MODEL_FILENAME = data/MODEL/Stamp.x					# [8] Stamp //0.5
+MODEL_FILENAME = data/MODEL/Tree.x					# [9] Tree //0.1
+MODEL_FILENAME = data/MODEL/Balloon.x				# [10] balloon //red
+MODEL_FILENAME = data/MODEL/Balloon1.x				# [11] balloon //yellow
+MODEL_FILENAME = data/MODEL/Balloon2.x				# [12] balloon //blue
+MODEL_FILENAME = data/MODEL/Balloon3.x				# [13] balloon //green
+
+#------------------------------------------------------------------------------
+# カメラ情報
+#------------------------------------------------------------------------------
+CAMERASET
+	POS = 0.0 200.0 0.0			# 視点
+	REF = 0.0 0.0 50.0			# 注視点
+	LENGE = 300
+
+	VIEWPORT = 0 0 1280 720		# ビューポート
+END_CAMERASET
+
+#------------------------------------------------------------------------------
+# ライト情報
+#------------------------------------------------------------------------------
+LIGHTSET
+	DIRECTION = 0.22 -0.87 0.44		# 方向
+	DIFFUSE = 1.0 1.0 1.0			# 拡散光
+END_LIGHTSET
+
+LIGHTSET
+	DIRECTION = -0.18 0.88 -0.44	# 方向
+	DIFFUSE = 0.65 0.65 0.65		# 拡散光
+END_LIGHTSET
+
+LIGHTSET
+	DIRECTION = 0.89 -0.11 0.44		# 方向
+	DIFFUSE = 0.15 0.15 0.15		# 拡散光
+END_LIGHTSET
+
+#------------------------------------------------------------------------------
+# 地面情報
+#------------------------------------------------------------------------------
+FIELDSET
+	TEXTYPE = 0
+	POS = 0 0 0
+	ROT = 0 0 0
+	BLOCK = 1 1
+	SIZE = 1500 1500
+END_FIELDSET
+
+#------------------------------------------------------------------------------
+# 壁情報
+#------------------------------------------------------------------------------
+WALLSET
+	TEXTYPE = 1
+	POS = 0 200 1000
+	ROT = 0 0 0
+	BLOCK = 1 1
+	SIZE = 2500 1000
+END_WALLSET
+
+#------------------------------------------------------------------------------
+# モデル配置情報
+#------------------------------------------------------------------------------
+#------------------
+# Stage
+#------------------
+MODELSET
+	TYPE = 5
+	POS = 0 0 0
+	ROT = 0 0 0
+	COLLISION = 0
+END_MODELSET
+
+#------------------
+# FootStep (1個目)
+#------------------
+MODELSET
+	TYPE = 0
+	POS = -450 0 450
+	ROT = 0 270 0
+END_MODELSET
+#------------------
+# FootStep (2個目)
+#------------------
+MODELSET
+	TYPE = 0
+	POS = 450 0 450
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# FootStep (3個目)
+#------------------
+MODELSET
+	TYPE = 0
+	POS = -450 0 -450
+	ROT = 0 180 0
+END_MODELSET
+#------------------
+# FootStep (4個目)
+#------------------
+MODELSET
+	TYPE = 0
+	POS = 450 0 -450
+	ROT = 0 90 0
+END_MODELSET
+
+#------------------
+# Bench (1個目pair)
+#------------------
+MODELSET
+	TYPE = 1
+	POS = 450 0 60
+	ROT = 0 90 0
+END_MODELSET
+MODELSET
+	TYPE = 1
+	POS = 450 0 -60
+	ROT = 0 90 0
+END_MODELSET
+#------------------
+# Bench (2個目pair)
+#------------------
+MODELSET
+	TYPE = 1
+	POS = 60 0 -450
+	ROT = 0 180 0
+END_MODELSET
+MODELSET
+	TYPE = 1
+	POS = -60 0 -450
+	ROT = 0 180 0
+END_MODELSET
+#------------------
+# Bench (3個目pair)
+#------------------
+MODELSET
+	TYPE = 1
+	POS = 60 0 450
+	ROT = 0 0 0
+END_MODELSET
+MODELSET
+	TYPE = 1
+	POS = -60 0 450
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Bench (4個目pair)
+#------------------
+MODELSET
+	TYPE = 1
+	POS = -450 0 60
+	ROT = 0 270 0
+END_MODELSET
+MODELSET
+	TYPE = 1
+	POS = -450 0 -60
+	ROT = 0 270 0
+END_MODELSET
+
+#------------------
+# flower (10 * 4 = 40)
+#------------------
+#------------------
+# flower group 1
+#------------------
+MODELSET 
+	TYPE = 2
+	POS = 145 0 420		#地面
+	ROT = 0 90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 4
+	POS = 145 0 400
+	ROT = 0 90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 3
+	POS = 350 20 250	#1階高さ20
+	ROT = 0 70 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 350 40 350	#2階高さ40
+	ROT = 0 45 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = 200 40 440
+	ROT = 0 30 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = 440 40 200
+	ROT = 0 60 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = 293 70 448	#3階高さ70
+	ROT = 0 15 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 325 70 430
+	ROT = 0 35 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = 310 70 440
+	ROT = 0 25 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 470 92 360	#4階高さ92
+	ROT = 0 60 0
+END_MODELSET
+
+#------------------
+# flower group 2 y軸で対称する　角度反転
+#------------------
+MODELSET 
+	TYPE = 2
+	POS = -145 0 420		#地面
+	ROT = 0 -90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 4
+	POS = -145 0 400
+	ROT = 0 -90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 3
+	POS = -350 20 250	#1階高さ20
+	ROT = 0 -70 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -350 40 350	#2階高さ40
+	ROT = 0 -45 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = -200 40 440
+	ROT = 0 -30 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = -440 40 200
+	ROT = 0 -60 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = -293 70 448	#3階高さ70
+	ROT = 0 -15 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -325 70 430
+	ROT = 0 -35 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = -310 70 440
+	ROT = 0 -25 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -470 92 360	#4階高さ92
+	ROT = 0 -60 0
+END_MODELSET
+
+#------------------
+# flower group 3　x軸対称する　角度plus二倍の(90-元の角度)
+#------------------
+MODELSET 
+	TYPE = 2
+	POS = 145 0 -420		#地面
+	ROT = 0 90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 4
+	POS = 145 0 -400
+	ROT = 0 90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 3
+	POS = 350 20 -250	#1階高さ20
+	ROT = 0 110 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 350 40 -350	#2階高さ40
+	ROT = 0 135 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = 200 40 -440
+	ROT = 0 150 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = 440 40 -200
+	ROT = 0 120 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = 293 70 -448	#3階高さ70
+	ROT = 0 165 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 325 70 -430
+	ROT = 0 145 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = 310 70 -440
+	ROT = 0 155 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = 470 92 -360	#4階高さ92
+	ROT = 0 120 0
+END_MODELSET
+
+#------------------
+# flower group 4 x軸とy軸で対称する
+#------------------
+MODELSET 
+	TYPE = 2
+	POS = -145 0 -420		#地面
+	ROT = 0 -90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 4
+	POS = -145 0 -400
+	ROT = 0 -90 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 3
+	POS = -350 20 -250	#1階高さ20
+	ROT = 0 -110 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -350 40 -350	#2階高さ40
+	ROT = 0 -135 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = -200 40 -440
+	ROT = 0 -150 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = -440 40 -200
+	ROT = 0 -120 0
+END_MODELSET
+
+MODELSET
+	TYPE = 3
+	POS = -293 70 -448	#3階高さ70
+	ROT = 0 -165 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -325 70 -430
+	ROT = 0 -145 0
+END_MODELSET
+
+MODELSET
+	TYPE = 4
+	POS = -310 70 -440
+	ROT = 0 -150 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 2
+	POS = -470 92 -360	#4階高さ92
+	ROT = 0 -120 0
+END_MODELSET
+
+#------------------
+# Hill (2*4 = 8)
+#------------------
+#------------------
+# Hill group 1
+#------------------
+MODELSET 
+	TYPE = 6
+	POS = 670 110 350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 630 110 550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 500 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 300 110 660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Hill group 2 y軸で対称する
+#------------------
+MODELSET 
+	TYPE = 6
+	POS = -670 110 350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -630 110 550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -500 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -300 110 660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Hill group 3　x軸対称する
+#------------------
+MODELSET 
+	TYPE = 6
+	POS = 670 110 -350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 630 110 -550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 500 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = 300 110 -660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Hill group 4 x軸とy軸で対称する
+#------------------
+MODELSET 
+	TYPE = 6
+	POS = -670 110 -350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -630 110 -550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -500 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 6
+	POS = -300 110 -660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Stone (4 * 6 = 24)
+#------------------
+#------------------
+# Stone group 1
+#------------------
+MODELSET 
+	TYPE = 7
+	POS = 650 110 700
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 600 110 450
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 670 110 250
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 390 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 470 110 580
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 200 110 650
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Stone group 2 y軸で対称する
+#------------------
+MODELSET 
+	TYPE = 7
+	POS = -650 110 700
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -600 110 450
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -670 110 250
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -390 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -470 110 580
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -200 110 650
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Stone group 3 x軸対称する
+#------------------
+MODELSET 
+	TYPE = 7
+	POS = 650 110 -700
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 600 110 -450
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 670 110 -250
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 390 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 470 110 -580
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = 200 110 -650
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Stone group 4 x軸とy軸で対称する
+#------------------
+MODELSET 
+	TYPE = 7
+	POS = -650 110 -700
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -600 110 -450
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -670 110 -250
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -390 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -470 110 -580
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 7
+	POS = -200 110 -650
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Stamp * 4
+#------------------
+MODELSET 
+	TYPE = 8
+	POS = 0 0 600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 8
+	POS = 0 0 -600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 8
+	POS = 600 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 8
+	POS = -600 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Tree group 1
+#------------------
+MODELSET 
+	TYPE = 9
+	POS = 670 110 350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 630 110 550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 500 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 300 110 660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Tree group 2 y軸で対称する
+#------------------
+MODELSET 
+	TYPE = 9
+	POS = -670 110 350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -630 110 550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -500 110 680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -300 110 660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Tree group 3　x軸対称する
+#------------------
+MODELSET 
+	TYPE = 9
+	POS = 670 110 -350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 630 110 -550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 500 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = 300 110 -660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Tree group 4 x軸とy軸で対称する
+#------------------
+MODELSET 
+	TYPE = 9
+	POS = -670 110 -350
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -630 110 -550
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -500 110 -680
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 9
+	POS = -300 110 -660
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# 風船 4 * 4
+#------------------
+#------------------
+# Tree group 1
+#------------------
+MODELSET 
+	TYPE = 13
+	POS = 100 0 600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 11
+	POS = -100 0 600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 12
+	POS = 0 0 500
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 10
+	POS = 0 0 700
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Tree group 2
+#------------------
+MODELSET 
+	TYPE = 13
+	POS = 100 0 -600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 11
+	POS = -100 0 -600
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 12
+	POS = 0 0 -500
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 10
+	POS = 0 0 -700
+	ROT = 0 0 0
+END_MODELSET
+#------------------
+# Tree group 3
+#------------------
+MODELSET 
+	TYPE = 13
+	POS = 600 0 100
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 11
+	POS = 600 0 -100
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 12
+	POS = 500 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 10
+	POS = 700 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# Tree group 4
+#------------------
+MODELSET 
+	TYPE = 13
+	POS = -600 0 100
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 11
+	POS = -600 0 -100
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 12
+	POS = -500 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+MODELSET 
+	TYPE = 10
+	POS = -700 0 0
+	ROT = 0 0 0
+END_MODELSET
+
+#------------------
+# プレイヤー
+#------------------
+# 1P
+PLAYERSET
+	POS = -150 100 0
+	ROT = 0 0 0
+END_PLAYERSET
+
+# 2P
+PLAYERSET
+	POS = -50 100 0
+	ROT = 0 0 0
+END_PLAYERSET
+
+# 3P
+PLAYERSET
+	POS = 50 100 0
+	ROT = 0 0 0
+END_PLAYERSET
+
+# 4P
+PLAYERSET
+	POS = 150 100 0
+	ROT = 0 0 0
+END_PLAYERSET
+ 
+END_SCRIPT		# この行は絶対消さないこと！

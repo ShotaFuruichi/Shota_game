@@ -1,0 +1,95 @@
+#==============================================================================
+#
+# チュートリアル画面の情報 [tutorial.txt]
+# Author : Itsuki Takaiwa
+#
+#==============================================================================
+SCRIPT			# この行は絶対消さないこと！
+
+#------------------------------------------------------------------------------
+# テクスチャ数
+#------------------------------------------------------------------------------
+NUM_TEXTURE = 2
+
+#------------------------------------------------------------------------------
+# テクスチャファイル名
+#------------------------------------------------------------------------------
+TEXTURE_FILENAME = data/TEXTURE/field00.jpg			# [0]空テクスチャ
+TEXTURE_FILENAME = data/TEXTURE/chara_select_bg.png		# [1]山テクスチャ
+TEXTURE_FILENAME = data/TEXTURE/field00.jpg			# [2]地面テクスチャ
+
+#------------------------------------------------------------------------------
+# モデル数
+#------------------------------------------------------------------------------
+NUM_MODEL = 14
+
+#------------------------------------------------------------------------------
+# モデルファイル名
+#------------------------------------------------------------------------------
+MODEL_FILENAME = data/MODEL/step.x					# [0] FootStep //1.5
+MODEL_FILENAME = data/MODEL/bench.x					# [1] bench //0.12
+MODEL_FILENAME = data/MODEL/flower000.x				# [2] flower1 //red 0.15
+MODEL_FILENAME = data/MODEL/flower001.x				# [3] flower2 //white
+MODEL_FILENAME = data/MODEL/flower002.x				# [4] flower3 //yellow
+MODEL_FILENAME = data/MODEL/stage.x					# [5] stage //0.155
+MODEL_FILENAME = data/MODEL/Hill.x					# [6] Hill //0.5
+MODEL_FILENAME = data/MODEL/Stone.x					# [7] Stone //0.2
+MODEL_FILENAME = data/MODEL/Stamp.x					# [8] Stamp //0.5
+MODEL_FILENAME = data/MODEL/Tree.x					# [9] Tree //0.1
+MODEL_FILENAME = data/MODEL/Balloon.x				# [10] balloon //red
+MODEL_FILENAME = data/MODEL/Balloon1.x				# [11] balloon //yellow
+MODEL_FILENAME = data/MODEL/Balloon2.x				# [12] balloon //blue
+MODEL_FILENAME = data/MODEL/Balloon3.x				# [13] balloon //green
+
+#------------------------------------------------------------------------------
+# カメラ情報
+#------------------------------------------------------------------------------
+CAMERASET
+	POS = 0.0 500.0 0.0			# 視点
+	REF = 0.0 0.0 0.0			# 注視点
+	LENGE = 500
+
+	VIEWPORT = 0 0 1280 720		# ビューポート
+END_CAMERASET
+
+#------------------------------------------------------------------------------
+# ライト情報
+#------------------------------------------------------------------------------
+LIGHTSET
+	DIRECTION = 0.22 -0.87 0.44		# 方向
+	DIFFUSE = 1.0 1.0 1.0			# 拡散光
+END_LIGHTSET
+
+LIGHTSET
+	DIRECTION = -0.18 0.88 -0.44	# 方向
+	DIFFUSE = 0.65 0.65 0.65		# 拡散光
+END_LIGHTSET
+
+LIGHTSET
+	DIRECTION = 0.89 -0.11 0.44		# 方向
+	DIFFUSE = 0.15 0.15 0.15		# 拡散光
+END_LIGHTSET
+
+#------------------------------------------------------------------------------
+# 地面情報
+#------------------------------------------------------------------------------
+FIELDSET
+	TEXTYPE = 0
+	POS = 0 0 0
+	ROT = 0 0 0
+	BLOCK = 1 1
+	SIZE = 1000 1000
+END_FIELDSET
+
+#------------------------------------------------------------------------------
+# 壁情報
+#------------------------------------------------------------------------------
+*WALLSET
+	TEXTYPE = 1
+	POS = 0 0 0
+	ROT = 0 0 0
+	BLOCK = 1 1
+	SIZE = 200 200
+END_WALLSET
+
+END_SCRIPT		# この行は絶対消さないこと！
